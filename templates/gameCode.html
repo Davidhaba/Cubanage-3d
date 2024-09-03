@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cubanage - 3D Game Online</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/kripken/ammo.js/master/builds/ammo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/gameStyles.css') }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body id="body">
+  <div id="loading-screen">
+    <select id="language-select-loadScreen" onchange="changeLanguage(this)">
+      <option value="no" disabled="true" selected="true">Select language</option>
+    </select>
+
+    <h6 id="h6LoadingScreen">En: <br>Have a good game!<br>Thanks for 1k views, I love you🔥🥹<br><br><br>Uk:<br>Приємної гри!<br>Дякую за 1к переглядів, я люблю вас🔥🥹</h6>
+    <div id="h1LoadingScreen">
+      <h1 style="margin: 0;">L</h1>
+      <div id="loader"></div>
+      <h1 style="margin: 0;">ading...</h1>
+    </div>
+    <button class="control-button" onclick="closeLoadingScreen()" id="closeLoadingScreenBtn">Continue</button>
+    <p id="terms-text">
+      By continuing, you agree to our
+      <a href="#" onclick="openPrivacyPolicy()">Privacy Policy</a> and
+      <a href="#" onclick="openTermsOfService()">Terms of Service</a>.
+    </p>
+  </div>
+
+  <div id="privacy-policy-modal" class="modalTextsRules">
+    <div class="modalTextsRules-content">
+      <span class="close" onclick="closePrivacyPolicy()">&times;</span>
+      <h2>Privacy Policy</h2>
+      <p>Last updated: 7.08.2024</p>
+
+      <h3>1. Introduction</h3>
+      <p>Welcome to "Cubanage" - 3D G ame. This privacy policy explains how we collect, use, and protect your information when you use our game.</p>
+
+      <h3>2. Information Collection</h3>
+      <p>We do not collect any personal information from users of our game.</p>
+
+      <h3>3. Use of Information</h3>
+      <p>We do not use your information as we do not collect any personal information.</p>
+
+      <h3>4. Use of Cookies</h3>
+      <p>Our game does not use cookies.</p>
+
+      <h3>5. Changes to This Privacy Policy</h3>
+      <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page.</p>
+
+      <h3>6. Contact Us</h3>
+      <p>If you have any questions about this privacy policy, please contact us.</p>
+
+    </div>
+  </div>
+
+  <div id="terms-of-service-modal" class="modalTextsRules">
+    <div class="modalTextsRules-content">
+      <span class="close" onclick="closeTermsOfService()">&times;</span>
+      <h2>Terms of Service</h2>
+      <p>Last updated: 7.08.2024</p>
+
+      <h3>1. Acceptance of Terms</h3>
+      <p>By using this game, you agree to these terms of use. If you do not agree, please do not use the game.</p>
+
+      <h3>2. Use of the Game</h3>
+      <p>You agree to use the game only for lawful purposes and in accordance with these terms. You must not use the game in a way that could harm it or other users.</p>
+
+      <h3>3. Intellectual Property</h3>
+      <p>All content and materials in the game belong to the creator of the game (hereinafter the creator) and are protected by copyright, trademark, and other intellectual property laws.</p>
+
+      <h3>4. Limitation of Liability</h3>
+      <p>The creator is not liable for any indirect, incidental, or consequential damages arising from your use of the game.</p>
+
+      <h3>5. Changes to Terms</h3>
+      <p>We may update these terms from time to time. Your continued use of the game after any changes indicates your acceptance of the new terms.</p>
+
+      <h3>6. Contact Us</h3>
+      <p>If you have any questions about these terms, please contact us.</p>
+
+    </div>
+  </div>
+
+  <div id="miniMapContainer"></div>
+  <div id="controls-camera">
+    <div style="display: flex; flex-direction: row;">
+      <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
+      <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
+    </div>
+    <div id="zoom-controls">
+      <label for="zoom-slider">Zoom / Z:</label>
+      <input type="range" id="zoom-slider" min="1" max="40" step="0.2" value="10" oninput="updateZoom()">
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div id="camera-follow">
+        <label id="camera-follow-label" for="camera-toggle">Follow the cube:</label>
+        <input type="checkbox" id="camera-toggle" onchange="toggleCamera()">
+      </div>
+      <div id="toggle-look-camera">
+        <label for="checkboxCameraLook" id="cameraLookToggleText">Look at the cube:</label>
+        <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
+      </div>
+    </div>
+    <div id="score-counter">
+      <span id="starsText">Stars:</span>
+      <span id="score">0/10</span>
+    </div>
+  </div>
+  <div id="message-container"></div>
+
+  <div id="camera-controls">
+    <button class="control-button" id="up-btn1" ontouchstart="startMovingCamera('up');" ontouchend="stopMovingCamera();" onmousedown="startMovingCamera('up');" onmouseup="stopMovingCamera();">Up</button>
+    <button class="control-button" id="down-btn1" ontouchstart="startMovingCamera('down');" ontouchend="stopMovingCamera();" onmousedown="startMovingCamera('down');" onmouseup="stopMovingCamera();">Down</button>
+    <button class="control-button" id="left-btn1" ontouchstart="startMovingCamera('left');" ontouchend="stopMovingCamera();" onmousedown="startMovingCamera('left');" onmouseup="stopMovingCamera();">Left</button>
+    <button class="control-button" id="right-btn1" ontouchstart="startMovingCamera('right');" ontouchend="stopMovingCamera();" onmousedown="startMovingCamera('right');" onmouseup="stopMovingCamera();">Right</button>
+  </div>
+  <div id="controls">
+    <button class="control-button" id="up-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/724/724811.png" alt="Up">
+    </button>
+    <button class="control-button" id="left-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Left">
+    </button>
+    <button class="control-button" id="right-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Right">
+    </button>
+    <button class="control-button" id="forward-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Forward">
+    </button>
+    <button class="control-button" id="back-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Back">
+    </button>
+  </div>
+
+  <div id="spawn-screen">
+    <div>
+      <h2 id="h2-spawn-screen">What do you want to spawn?</h2>
+      <div style="display: flex; margin-top: 25px;">
+        <button class="control-button" id="cube-spawn-button" onclick="spawnCube()">Cube</button>
+        <button class="control-button" id="camera-spawn-button" onclick="spawnCamera()">Camera</button>
+      </div>
+      <button class="control-button" id="cancel-spawn-button" onclick="spawnScreen()">Cancel</button>
+      <h4 id="spawnNotAvailable"></h4>
+      <div id="animationSpawn">
+        <label for="checkboxAnimationSpawn" id="animSpawnText">Animation spawn:</label>
+        <input type="checkbox" id="checkboxAnimationSpawn" checked>
+      </div>
+    </div>
+  </div>
+
+  <div id="coordinates">X: 0, Y: 0, Z: 0</div>
+
+  <div id="settings-modal">
+    <div id="modal-content">
+      <span class="close" onclick="closeSettings()">&times;</span>
+
+      <div id="sound-settings">
+        <h2 id="musicTextSettings">Music</h2>
+        <label for="volume-slider">
+          <span id="textVolumeForSlider">Volume:</span>
+          <span id="textVolumeForVolume">50%</span>
+        </label>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5" oninput="updateVolume()">
+        <div id="toggleMusicCheckbox">
+          <label for="toggle-music" id="labelMusicForToggle">Music:</label>
+          <input type="checkbox" id="toggle-music" onchange="toggleMusic()" checked>
+        </div>
+        <div id="musicSelectorDiv">
+          <label for="musicSelector">
+            <span id="musicSelectorLabel">Select a music:</span>
+          </label>
+          <select id="musicSelector" onchange="changeMusic()">
+            <option value="https://dl.dropbox.com/scl/fi/c7jzfc37nfmttb5hz1jh2/sb_indreams-chosic.com.mp3?rlkey=1obsofmzjwe3sleiwu79l891r">In Dreams, Scott Buckley</option>
+            <option value="https://dl.dropbox.com/scl/fi/g2pxq6gp827k7jx4pch0x/muzika_dlja_igr_-_fon_muzika_5_-z3.fm.mp3?rlkey=h8quh8y1uqr122a47ypby6xi6">Music (Unknown Artist)</option>
+            <option value="https://dl.dropbox.com/scl/fi/yeuearqwy2imnuq90qr4k/the-epic-2-by-rafael-krux-chosic.com.mp3?rlkey=ozkp60sy2tfsmljzkmjdoj3lv">The Epic 2, Rafael Krux</option>
+          </select>
+          <div id="loading-status">Music is loading...</div>
+        </div>
+      </div>
+      <h2 id="h2-graphics"><br>Graphics</h2>
+      <div id="quality-controls" style="width:70%;">
+        <label for="quality-slider">
+          <span id="quality-text">Graphics Quality:</span>
+          <span id="quality-textValue">Standart</span>
+        </label>
+        <input type="range" id="quality-slider" min="0" max="4" step="0.1" value="0" oninput="updateQuality()">
+      </div>
+
+      <div id="sizeCubeSlider">
+        <label for="size-slider" id="sizeLabel">
+          <span id="size-text">Cube Size:</span>
+          <span id="size-value">1.0</span>
+        </label>
+        <input type="range" id="size-slider" min="0.5" max="2" step="0.1" value="1" oninput="updateCubeSize()">
+      </div>
+
+      <div id="fog-toggle">
+        <label for="fog-checkbox">Enable Fog:</label>
+        <input type="checkbox" id="fog-checkbox" onchange="toggleFog()">
+      </div>
+
+      <h2 id="h2-sensitivity"><br>Sensitivity</h2>
+      <div id="sensitivityRotation">
+        <label for="rotation-speed-slider" id="rotationLabel">
+          <span id="rotation-text">Rotation Speed:</span>
+          <span id="rotation-speed-value">10</span>
+        </label>
+        <input type="range" id="rotation-speed-slider" min="0.001" max="0.02" step="0.001" value="0.01" oninput="updateRotationSpeed()">
+      </div>
+      <div id="force-control">
+        <label for="force-slider" id="forceLabel">
+          <span id="force-text">The force pulling the cube:</span>
+          <span id="force-value">2</span>
+        </label>
+        <input type="range" id="force-slider" min="1" max="5" step="1" value="2" oninput="updateForce()">
+      </div>
+
+      <div id="toggle-controls-move">
+        <label for="toggle-btn-move" id="toggleMoveLabel">Switch the cube's movement mode:</label>
+        <input type="checkbox" id="toggle-btn-move">
+      </div>
+
+      <h2 id="h2-map"><br>Map</h2>
+      <div id="map-settings">
+        <div class="map-rotate-settings">
+          <label id="rotateMapToggle" for="toggle-map-rotate">Rotate map:</label>
+          <input type="checkbox" id="toggle-map-rotate" onchange="cameraRotationChange(this)" checked>
+        </div>
+        <div class="map-size-settings">
+          <label for="map-size-slider" id="mapSize">
+            <span id="mapSize-text">Map size:</span>
+            <span id="mapSize-value">160px</span>
+          </label>
+          <input type="range" id="map-size-slider" min="100" max="200" step="10" value="160" oninput="updateMapSize(this.value)">
+        </div>
+      </div>
+
+      <h2 id="h2-background"><br>Background</h2>
+      <div id="sky-controls">
+        <p class="p-color" id="textColorImages">Images</p>
+        <button onclick="changeSkyTexture('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg')">
+          <img class="selected-sky" src="https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg" alt="Sky 1">
+        </button>
+        <button onclick="changeSkyTexture('https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=')">
+          <img src="https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=" alt="Sky 2">
+        </button>
+        <button onclick="changeSkyTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU')">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU" alt="Sky 3">
+        </button>
+      </div>
+      <p class="p-color" id="textColorColors">Colors</p>
+      <div id="color-controls">
+        <button id="skyColorBlue" onclick="changeSkyColor(0x87CEEB)"></button>
+        <button id="skyColorGold" onclick="changeSkyColor(0xFFD700)"></button>
+        <button id="skyColorLightGreen" onclick="changeSkyColor(0x90EE90)"></button>
+      </div>
+      <p class="p-color" id="textColorOthers">Others</p>
+      <div id="color-controls-input">
+        <input type="color" id="color-background" onchange="changeSkyColor(this.value)">
+      </div>
+
+      <h2 id="h2-keyBindings"><br>Key Bindings</h2>
+      <button class="control-button" id="open-settingsBindings-btn">Edit keys</button>
+
+      <h2 id="h2-mobile&pc"><br>Mobile & PC</h2>
+      <div id="toggleKeyboardCheckbox" style="margin-bottom: 10px;">
+        <label id="keyboardOrButtonsLabel" for="keyboardInputToggle">Buttons on the screen:</label>
+        <input type="checkbox" id="keyboardInputToggle" onchange="updateControlsVisibility()" checked>
+      </div>
+      <label for="rotationSelect" id="rotationSelectLabel">Rotation:</label>
+      <select id="rotationSelect" onchange="updateRotationType()">
+        <option id="verticalRotationOption" value="vertical" selected>Vertical</option>
+        <option id="reverseVerticalRotationOption" value="reverseVertical">Reverse Vertical</option>
+        <option id="horizontalRotationOption" value="horizontal">Horizontal</option>
+        <option id="reverseHorizontalRotationOption" value="reverseHorizontal">Reverse Horizontal</option>
+      </select>
+
+      <h2 id="h2-language"><br>Language</h2>
+      <div id="language-settings">
+        <label for="language-select">Select Language:</label>
+        <select id="language-select" onchange="changeLanguage(this)">
+        </select>
+      </div>
+      <h2 id="h2-about"><br>About</h2>
+      <button class="control-button" id="instructions-btn" onclick="showInstructions()">Instructions</button>
+    </div>
+  </div>
+
+  <div id="instructions">
+    <h1 id="h1Instructions">Instructions</h1>
+    <h5 id="h5Instructions">EN:<br>• Control the cube with the arrow keys.<br>• Collect stars (yellow shapes) to get points.<br>• Good luck :)<br><br>UK:<br>• Керуйте кубом за допомогою стрілок.<br>• Збирайте зірки (жовті форми), щоб отримати бали.<br><br>• Удачі :)</h5>
+    <button class="control-button" id="back-to-menu-btn" onclick="closeInstructions()">OK</button>
+  </div>
+
+  <div id="pausedScreen">
+    <h2 id="h2Paused">Paused</h2>
+    <button class="control-button" id="settings-btn" onclick="openSettings()">Settings</button>
+
+    <button class="control-button" id="continueButton" onclick="pauseUnpauseFunc()">Continue</button>
+  </div>
+
+  <div id="settingsBindings-menu">
+    <button id="close-settingsBindings-btn">X</button>
+    <h3>Key Bindings</h3>
+    <div>
+      <label for="key-pause">Pause:</label>
+      <input id="key-pause" type="text" value="p" readonly>
+    </div>
+    <h2>Move Camera</h2>
+    <div>
+      <label for="key-upCamera">Move Camera Up:</label>
+      <input id="key-upCamera" type="text" value="w" readonly>
+    </div>
+    <div>
+      <label for="key-downCamera">Move Camera Down:</label>
+      <input id="key-downCamera" type="text" value="s" readonly>
+    </div>
+    <div>
+      <label for="key-leftCamera">Move Camera Left:</label>
+      <input id="key-leftCamera" type="text" value="a" readonly>
+    </div>
+    <div>
+      <label for="key-rightCamera">Move Camera Right:</label>
+      <input id="key-rightCamera" type="text" value="d" readonly>
+    </div>
+    <h2>Move Cube</h2>
+    <div>
+      <label for="key-upCube">Move Cube Up:</label>
+      <input id="key-upCube" type="text" value="Shift" readonly>
+    </div>
+    <div>
+      <label for="key-forwardCube">Move Cube Forward:</label>
+      <input id="key-forwardCube" type="text" value="ArrowUp" readonly>
+    </div>
+    <div>
+      <label for="key-backCube">Move Cube Back:</label>
+      <input id="key-backCube" type="text" value="ArrowDown" readonly>
+    </div>
+    <div>
+      <label for="key-leftCube">Move Cube Left:</label>
+      <input id="key-leftCube" type="text" value="ArrowLeft" readonly>
+    </div>
+    <div>
+      <label for="key-rightCube">Move Cube Right:</label>
+      <input id="key-rightCube" type="text" value="ArrowRight" readonly>
+    </div>
+
+  </div>
+
+  <audio id="startSound" src="https://dl.dropbox.com/scl/fi/c7jzfc37nfmttb5hz1jh2/sb_indreams-chosic.com.mp3?rlkey=1obsofmzjwe3sleiwu79l891r" preload="auto" onended="restartMusic()"></audio>
+
+  <script src="{{ url_for('static', filename='js/gameScript.js') }}"></script>
+
+  <script>
+    function openPrivacyPolicy() {
+      document.getElementById('privacy-policy-modal').style.display = 'block';
+    }
+
+    function closePrivacyPolicy() {
+      document.getElementById('privacy-policy-modal').style.display = 'none';
+    }
+
+    function openTermsOfService() {
+      document.getElementById('terms-of-service-modal').style.display = 'block';
+    }
+
+    function closeTermsOfService() {
+      document.getElementById('terms-of-service-modal').style.display = 'none';
+    }
+  </script>
+
+  <script>
+    let isToggleKeyboardInput = false;
+    let isInteracting = false;
+    let startX, startY;
+    let cameraRotation = true;
+    let gravity = 0.003;
+    let moveDirection = null;
+    let moveInterval = null;
+    let isMoving = false;
+    let isPaused = true;
+    const textureLoader = new THREE.TextureLoader();
+    let skyTexture = textureLoader.load('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg');
+    let verticalLine;
+    let horizontalLine;
+    let followCube = false;
+    let followCubeLook = true;
+    let euler = new THREE.Euler(0, 0, 0, 'YXZ');
+    let allowTouchEvents = true;
+    let currentTween = null;
+    let pressAndHoldMode = false;
+    let activeDirections = {};
+    let stars = [];
+    let starEdges = [];
+    let totalStars = 10;
+    let collectedStars = 0;
+    let particlesArray = [];
+    let particleGravity = 0.004;
+    const skyGeometry = new THREE.SphereBufferGeometry(800, 100, 100);
+    let skyMaterial = new THREE.MeshBasicMaterial({
+      map: skyTexture,
+      side: THREE.BackSide
+    });
+    let sky = new THREE.Mesh(skyGeometry, skyMaterial);
+    const keyBindings = {
+      upCamera: 'w',
+      downCamera: 's',
+      leftCamera: 'a',
+      rightCamera: 'd',
+      upCube: 'Shift',
+      backCube: 'ArrowDown',
+      leftCube: 'ArrowLeft',
+      rightCube: 'ArrowRight',
+      forwardCube: 'ArrowUp',
+      pause: 'p',
+    };
+  </script>
+
+<script>
+  const socket = io();
+  let playerId = null;
+  const cubes = {};
+  const nicknames = {};
+
+  socket.on('connect_player', (data) => {
+    playerId = socket.id;
+  });
+
+  socket.on('new_player', (data) => {
+    const players = data.players;
+    for (const id in players) {
+      if (id !== playerId && !cubes[id]) {
+        createCube(id, players[id]);
+        createNickname(id, players[id].nickname);
+      }
+    }
+  });
+
+  socket.on('remove_player', (data) => {
+    const id = data.id;
+    if (cubes[id]) {
+      scene.remove(cubes[id]);
+      cubes[id].geometry.dispose();
+      cubes[id].material.dispose();
+      delete cubes[id];
+    }
+    if (nicknames[id]) {
+      scene.remove(nicknames[id]);
+      delete nicknames[id];
+    }
+  });
+
+  socket.on('update_position', (data) => {
+    if (!isPaused) {
+      const id = data.id;
+      if (!cubes[id]) {
+        if (playerId && id !== playerId) {
+          createCube(id, data.position);
+        }
+      } else {
+        cubes[id].position.set(data.position.x, data.position.y, data.position.z);
+        if (nicknames[id]) {
+          nicknames[id].position.set(data.position.x, data.position.y + 1.5, data.position.z);
+        }
+      }
+    }
+  });
+
+  socket.on('update_nicknames', (data) => {
+    const players = data.players;
+    for (const id in players) {
+      if (nicknames[id]) {
+        nicknames[id].text = players[id].nickname;
+        nicknames[id].geometry.needsUpdate = true;
+      }
+    }
+  });
+
+  socket.on('resize_cube', (data) => {
+    if (cubes[data.id]) {
+      cubes[data.id].scale.set(data.size, data.size, data.size);
+    }
+  });
+
+  function createCube(id, position) {
+    if (!cubes[id]) {
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshNormalMaterial();
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.set(position.x, position.y, position.z);
+      scene.add(cube);
+      cubes[id] = cube;
+    }
+  }
+
+  function createNickname(id, nickname) {
+    const texture = new THREE.CanvasTexture(createTextCanvas(nickname));
+    const material = new THREE.SpriteMaterial({ map: texture });
+    const sprite = new THREE.Sprite(material);
+    sprite.scale.set(1, 0.3, 1);
+    sprite.position.set(cubes[id].position.x, cubes[id].position.y + 1.5, cubes[id].position.z);
+    scene.add(sprite);
+    nicknames[id] = sprite;
+  }
+
+  function createTextCanvas(text) {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    context.font = '32px Arial';
+    canvas.width = context.measureText(text).width;
+    canvas.height = 32;
+    context.font = '32px Arial';
+    context.textBaseline = 'top';
+    context.fillStyle = 'white';
+    context.fillText(text, 0, 0);
+    return canvas;
+  }
+
+  function updateCubePosition() {
+    const position = {
+      x: cube.position.x,
+      y: cube.position.y,
+      z: cube.position.z,
+    };
+    socket.emit('update_position', { position });
+  }
+
+  function updateNickname(newNickname) {
+    socket.emit('update_nickname', { nickname: newNickname });
+  }
+
+</script>
+
+  <script>
+    function updateRotationType() {
+      const rotationTypeHorizontal = document.getElementById('rotationSelect');
+      const rotationType = rotationTypeHorizontal.value;
+      const body = document.getElementById('body');
+      if (rotationType === 'horizontal') {
+        body.style.transform = `rotate(90deg)`;
+      } else if (rotationType === 'reverseHorizontal') {
+        body.style.transform = `rotate(-90deg)`;
+      } else if (rotationType === 'vertical') {
+        body.style.transform = `rotate(0deg)`;
+      } else if (rotationType === 'reverseVertical') {
+        body.style.transform = `rotate(180deg)`;
+      }
+    }
+
+    function cameraRotationChange(checkbox) {
+      cameraRotation = checkbox.checked;
+    }
+    const scene = new THREE.Scene();
+    const miniMapScene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance',
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(1);
+    renderer.shadowMap.enabled = true;
+    document.body.appendChild(renderer.domElement);
+    window.addEventListener('resize', onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshNormalMaterial();
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    const platformGeometry = new THREE.BoxGeometry(10, 1, 10);
+    const platformMaterial = new THREE.MeshBasicMaterial({
+      color: 0x888888
+    });
+    const platform = new THREE.Mesh(platformGeometry, platformMaterial);
+    platform.position.y = -5;
+    scene.add(platform);
+    camera.position.z = 5;
+    const edgesGeometry = new THREE.EdgesGeometry(platformGeometry);
+    const edgesMaterial = new THREE.LineBasicMaterial({
+      color: 0x000000
+    });
+    const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+    edges.position.y = -5;
+    scene.add(edges);
+
+    function createCross() {
+      const cubeWidth = cube.geometry.boundingBox.max.x - cube.geometry.boundingBox.min.x;
+      const crossMaterial = new THREE.MeshBasicMaterial({
+        color: 0xff0000,
+        side: THREE.DoubleSide
+      });
+      const lineGeometries = [
+        new THREE.PlaneGeometry(cubeWidth, 0.1),
+        new THREE.PlaneGeometry(0.1, cubeWidth)
+      ];
+      const cross = new THREE.Group();
+      lineGeometries.forEach(geometry => {
+        const line = new THREE.Mesh(geometry, crossMaterial);
+        cross.add(line);
+      });
+      cross.rotation.x = -Math.PI / 2;
+      scene.add(cross);
+      return cross;
+    }
+    cube.geometry.computeBoundingBox();
+    const cross = createCross();
+    cross.visible = false;
+    const miniMapCamera = new THREE.OrthographicCamera(-13, 13, 13, -13, 0.1, 100);
+    miniMapCamera.position.set(0, 10, 0);
+    miniMapCamera.lookAt(new THREE.Vector3(0, 0, 0));
+    const miniMapRenderer = new THREE.WebGLRenderer({
+      antialias: true
+    });
+    miniMapRenderer.setSize(160, 160);
+    document.getElementById('miniMapContainer').appendChild(miniMapRenderer.domElement);
+    miniMapRenderer.domElement.addEventListener('click', onMiniMapClick, false);
+
+    function onMiniMapClick(event) {
+      const rect = miniMapRenderer.domElement.getBoundingClientRect();
+      const mouse = new THREE.Vector2(
+        ((event.clientX - rect.left) / rect.width) * 2 - 1,
+        -((event.clientY - rect.top) / rect.height) * 2 + 1
+      );
+      const raycaster = new THREE.Raycaster();
+      raycaster.setFromCamera(mouse, miniMapCamera);
+      const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+      const intersectPoint = new THREE.Vector3();
+      if (currentTween) {
+        currentTween.stop();
+      }
+      gravity = 0;
+      if (raycaster.ray.intersectPlane(plane, intersectPoint)) {
+        cube.position.set(intersectPoint.x, cube.position.y, intersectPoint.z);
+        const scale = cube.scale;
+        const boundingBox = cube.geometry.boundingBox.max;
+        const dimensions = {
+          y: boundingBox.y * scale.y,
+          x: boundingBox.x * scale.x,
+          z: boundingBox.z * scale.z
+        };
+        cross.position.set(intersectPoint.x, cube.position.y + dimensions.y + 0.01, intersectPoint.z);
+        cross.visible = true;
+      }
+    }
+
+    function updateMapSize(sizeMap) {
+      miniMapRenderer.setSize(sizeMap, sizeMap);
+      const mapCont = document.getElementById("miniMapContainer");
+      mapCont.style.width = sizeMap + "px";
+      mapCont.style.height = sizeMap + "px";
+      document.getElementById("mapSize-value").textContent = sizeMap + "px";
+      const coordinates = document.getElementById("coordinates");
+      coordinates.style.top = (parseInt(sizeMap) + 10) + "px";
+      sizeMap = sizeMap.slice(0, -1);
+      coordinates.style.fontSize = sizeMap + "px";
+    }
+
+    function updateMiniMap() {
+      miniMapScene.children.forEach(child => miniMapScene.remove(child));
+      scene.traverse((obj) => {
+        if (obj instanceof THREE.Mesh && obj.visible == true) {
+          const meshClone = obj.clone();
+          miniMapScene.add(meshClone);
+        }
+      });
+      if (cross) {
+        const mapCrossClone = cross.clone();
+        mapCrossClone.scale.set(2, 2, 1);
+        miniMapScene.add(mapCrossClone);
+      };
+      miniMapCamera.position.copy(cube.position).add(new THREE.Vector3(0, 50, 0));
+      if (cameraRotation) {
+        const cameraDirection = new THREE.Vector3();
+        camera.getWorldDirection(cameraDirection);
+        const angle = Math.atan2(cameraDirection.x, cameraDirection.z);
+        miniMapCamera.rotation.z = angle + Math.PI;
+      } else {
+        miniMapCamera.rotation.z = 0;
+      }
+      miniMapRenderer.render(miniMapScene, miniMapCamera);
+    }
+  </script>
+
+  <script>
+    document.getElementById('open-settingsBindings-btn').addEventListener('click', () => {
+      document.getElementById('settingsBindings-menu').style.display = 'block';
+    });
+    document.getElementById('close-settingsBindings-btn').addEventListener('click', () => {
+      document.getElementById('settingsBindings-menu').style.display = 'none';
+    });
+
+    function changeMusic() {
+      var selector = document.getElementById('musicSelector');
+      var selectedValue = selector.options[selector.selectedIndex].value;
+      document.getElementById('loading-status').style.display = 'block';
+      startSound.src = selectedValue;
+      startSound.load();
+      if (toggleMusicCheckbox.checked) {
+        startSound.play();
+      }
+      startSound.addEventListener('canplaythrough', function() {
+        document.getElementById('loading-status').style.display = 'none';
+      });
+    }
+
+    function restartMusic() {
+      setTimeout(function() {
+        startSound.currentTime = 0;
+        startSound.play();
+      }, 1000);
+    }
+    const updateQuality = () => {
+      const qualityLevel = document.getElementById("quality-slider").value;
+      const qualityTextValue = document.getElementById("quality-textValue");
+      if (qualityLevel <= 0) {
+        renderer.setPixelRatio(window.devicePixelRatio * 0.5);
+        qualityTextValue.textContent = "Standart"
+      } else {
+        renderer.setPixelRatio(qualityLevel);
+        qualityTextValue.textContent = `${qualityLevel}`;
+      }
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    const sizeLabel = document.getElementById('size-value');
+    const sizeSlider = document.getElementById('size-slider');
+    sizeSlider.addEventListener('input', updateCubeSize);
+
+    function updateCubeSize() {
+      const newSize = parseFloat(sizeSlider.value);
+      cube.scale.set(newSize, newSize, newSize);
+      sizeLabel.textContent = `${newSize.toFixed(1)}`;
+      socket.emit('resize_cube', { size: newSize });
+    }
+    const instructions = document.getElementById('instructions');
+
+    function showInstructions() {
+      instructions.style.display = 'block';
+    }
+
+    function closeInstructions() {
+      instructions.style.display = 'none';
+    }
+    const startSound = document.getElementById('startSound');
+    const volumeSlider = document.getElementById('volume-slider');
+    const toggleMusicCheckbox = document.getElementById('toggle-music');
+    startSound.load();
+    const updateVolume = () => {
+      const volume = parseFloat(volumeSlider.value);
+      startSound.volume = volume;
+      document.getElementById('textVolumeForVolume').textContent = Math.round(volume * 100) + '%';
+      if (volume === 0 && toggleMusicCheckbox) {
+        startSound.pause();
+        toggleMusicCheckbox.checked = false;
+      } else if (toggleMusicCheckbox) {
+        startSound.play();
+        toggleMusicCheckbox.checked = true;
+      }
+    };
+    const toggleMusic = () => {
+      toggleMusicCheckbox.checked ? startSound.play() : startSound.pause();
+    };
+    const settingsModal = document.getElementById('settings-modal');
+    const settingsBtn = document.getElementById('settings-btn');
+    const openSettings = () => {
+      settingsModal.style.display = 'flex';
+    };
+    const closeSettings = () => {
+      settingsModal.style.display = 'none';
+    };
+    window.onclick = function(event) {
+      if (event.target === settingsModal) {
+        closeSettings();
+      } else if (event.target == document.getElementById('privacy-policy-modal')) {
+        closePrivacyPolicy();
+      } else if (event.target == document.getElementById('terms-of-service-modal')) {
+        closeTermsOfService();
+      }
+    };
+    const changeSkyTexture = (imageUrl) => {
+      if (imageUrl) {
+        skyTexture = textureLoader.load(imageUrl);
+      } else {
+        skyTexture = textureLoader.load('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg');
+      }
+      skyMaterial.map = skyTexture;
+      skyMaterial.needsUpdate = true;
+      scene.remove(sky);
+      sky = new THREE.Mesh(skyGeometry, skyMaterial);
+      scene.add(sky);
+      sky.position.y = 100;
+      const selectedSkyElements = document.querySelectorAll('.selected-sky');
+      selectedSkyElements.forEach(element => {
+        element.classList.remove('selected-sky');
+      });
+      const clickedButton = event.target.closest('button');
+      if (clickedButton) {
+        const clickedImg = clickedButton.querySelector('img');
+        clickedImg.classList.add('selected-sky');
+      }
+    };
+    scene.add(sky);
+    sky.position.y = 100;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    const changeSkyColor = (color) => {
+      scene.remove(sky);
+      scene.background = new THREE.Color(color);
+      const selectedSkyElements = document.querySelectorAll('.selected-sky');
+      selectedSkyElements.forEach(element => {
+        element.classList.remove('selected-sky');
+      })
+      const clickedButton = event.target.closest('button');
+      if (clickedButton) {
+        clickedButton.classList.add('selected-sky');
+      }
+    };
+
+    function spawnScreen() {
+      toggleSpawnScreen = document.getElementById('spawn-screen');
+      if (toggleSpawnScreen.style.display == "flex") {
+        toggleSpawnScreen.style.display = "none";
+      } else {
+        toggleSpawnScreen.style.display = "flex";
+      }
+    }
+
+    function spawnCamera() {
+      var textToAdd = "<br>The camera has successfully spawned at the position: 0, 0, 0.";
+      document.getElementById("spawnNotAvailable").innerHTML = textToAdd;
+      const checkboxChecked = document.getElementById("checkboxAnimationSpawn").checked
+      const updatedText = getTranslatedTextSpawn("spawnCameraText");
+      document.getElementById("spawnNotAvailable").innerHTML = updatedText;
+      if (checkboxChecked) {
+        const startCamera = camera.position.clone();
+        const targetCamera = new THREE.Vector3(0, 0, 10);
+        const tweenCamera = new TWEEN.Tween(startCamera)
+          .to(targetCamera, 1000)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .onUpdate(() => {
+            camera.position.copy(startCamera);
+            camera.lookAt(cube.position);
+          })
+          .start();
+      } else {
+        camera.position.set(0, 0, 10);
+        camera.lookAt(cube.position);
+      }
+    }
+
+    function getTranslatedTextSpawn(key) {
+      const language = document.getElementById("language-select").value;
+      const translations = languageTexts[language];
+      return translations[key] || key;
+    }
+
+    function spawnCube() {
+      var textToAdd = "<br>The cube has successfully spawned at the position: 0, 0, 0.";
+      document.getElementById("spawnNotAvailable").innerHTML = textToAdd;
+      const checkboxChecked = document.getElementById("checkboxAnimationSpawn").checked
+      const updatedText = getTranslatedTextSpawn("spawnCubeText");
+      document.getElementById("spawnNotAvailable").innerHTML = updatedText;
+      gravity = 0.003;
+      if (checkboxChecked) {
+        const start = cube.position.clone();
+        const target = start.clone();
+        target.y = 0;
+        target.x = 0;
+        target.z = 0;
+        const tween = new TWEEN.Tween(cube.position)
+          .to(target, 1000)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .start();
+        new TWEEN.Tween(cube.rotation)
+          .to({
+            z: 0
+          }, 500)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .start();
+      } else {
+        cube.position.set(0, 0, 0);
+        cube.rotation.z = 0;
+      }
+    }
+    loadingLoadScreen = true;
+    window.onload = function() {
+      setTimeout(function() {
+        document.getElementById('closeLoadingScreenBtn').style.display = 'block';
+        document.getElementById('h1LoadingScreen').style.display = 'none';
+        document.getElementById('loader').style.display = 'none';
+        loadingLoadScreen = false;
+      }, 500);
+    };
+
+    function closeLoadingScreen() {
+      if (!loadingLoadScreen) {
+        document.getElementById('loading-screen').style.display = 'none';
+        startSound.play();
+        updateVolume();
+        showInstructions();
+        isPaused = false;
+      }
+    }
+    const raycaster = new THREE.Raycaster();
+    const toggleCamera = () => {
+      followCube = !followCube;
+    };
+    const toggleCameraLookAt = () => {
+      followCubeLook = !followCubeLook;
+    };
+    const updateCameraPosition = () => {
+      if (followCube) {
+        camera.position.set(cube.position.x, cube.position.y + 5 * cube.scale.y, cube.position.z + document.getElementById("zoom-slider").value * cube.scale.z);
+      }
+      if (followCubeLook) {
+        camera.lookAt(cube.position);
+        allowTouchEvents = false;
+      } else {
+        allowTouchEvents = true;
+      }
+    };
+
+    function onInputStart(event) {
+      if (event.target === renderer.domElement && !isPaused) {
+        if (event.type === 'mousedown' || event.type === 'touchstart') {
+          if (event.type === 'mousedown') {
+            if (allowTouchEvents) {
+              document.body.requestPointerLock();
+              startX = event.clientX;
+              startY = event.clientY;
+            }
+          } else if (event.type === 'touchstart') {
+            if (allowTouchEvents) {
+              startX = event.touches[0].clientX;
+              startY = event.touches[0].clientY;
+            }
+          }
+          isInteracting = true;
+        }
+      }
+    }
+
+    function onInputMove(event) {
+      if (!isInteracting) return;
+      let deltaX, deltaY;
+      if (event.type === 'mousemove' || event.type === 'touchmove') {
+        if (event.type === 'mousemove') {
+          deltaX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+          deltaY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+        } else if (event.type === 'touchmove') {
+          const touchEndX = event.touches[0].clientX;
+          const touchEndY = event.touches[0].clientY;
+          deltaX = touchEndX - startX;
+          deltaY = touchEndY - startY;
+          startX = touchEndX;
+          startY = touchEndY;
+        }
+        euler.setFromRotationMatrix(camera.matrixWorld);
+        euler.y -= deltaX * rotationSpeed;
+        euler.x -= deltaY * rotationSpeed;
+        euler.x = Math.max(-Math.PI / 2.01, Math.min(Math.PI / 2.01, euler.x));
+        camera.setRotationFromEuler(euler);
+      }
+    }
+
+    function onInputEnd(event) {
+      if (event.type === 'mouseup' || event.type === 'touchend') {
+        isInteracting = false;
+        if (event.type === 'mouseup') {
+          document.exitPointerLock();
+        }
+      }
+    }
+    document.addEventListener('mousedown', onInputStart, false);
+    document.addEventListener('mousemove', onInputMove, false);
+    document.addEventListener('mouseup', onInputEnd, false);
+    document.addEventListener('touchstart', onInputStart, false);
+    document.addEventListener('touchmove', onInputMove, false);
+    document.addEventListener('touchend', onInputEnd, false);
+    const checkCollision = (mesh1, mesh2) => {
+      const box1 = new THREE.Box3().setFromObject(mesh1);
+      const box2 = new THREE.Box3().setFromObject(mesh2);
+      return box1.intersectsBox(box2);
+    };
+    const isAbovePlatform = () => {
+      const boxCube = new THREE.Box3().setFromObject(cube);
+      const boxPlatform = new THREE.Box3().setFromObject(platform);
+      const cubeScale = cube.scale.z;
+      const isAbove = boxCube.min.y >= boxPlatform.max.y - 0.05 && boxCube.min.y <= boxPlatform.max.y;
+      const isHorizontallyAligned = boxCube.min.x >= boxPlatform.min.x - cubeScale && boxCube.max.x <= boxPlatform.max.x + cubeScale;
+      const isDepthAligned = boxCube.min.z >= boxPlatform.min.z - cubeScale && boxCube.max.z <= boxPlatform.max.z + cubeScale;
+      return isAbove && isHorizontallyAligned && isDepthAligned;
+    };
+    const moveCube = (direction, distance) => {
+      if (!isPaused) {
+        const start = cube.position.clone();
+        const target = start.clone();
+        distance = pressAndHoldMode ? force * distance * 70 : force * distance;
+        switch (direction) {
+          case 'up':
+            target.y += distance;
+            break;
+          case 'left':
+            target.x -= distance;
+            break;
+          case 'right':
+            target.x += distance;
+            break;
+          case 'forward':
+            target.z -= distance;
+            break;
+          case 'back':
+            target.z += distance;
+            break;
+        }
+        if (currentTween) {
+          currentTween.stop();
+        }
+        const duration = pressAndHoldMode ? 60000 : 500;
+        currentTween = new TWEEN.Tween(cube.position)
+          .to(target, duration)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .onUpdate(() => {
+            if (checkCollision(cube, platform) && !isAbovePlatform()) {
+              currentTween.stop();
+            }
+          })
+          .start();
+        gravity = 0;
+      }
+    };
+    const handleStart = (direction, distance) => {
+      activeDirections[direction] = true;
+      moveCube(direction, distance);
+    };
+    const handleEnd = (direction) => {
+      delete activeDirections[direction];
+      if (Object.keys(activeDirections).length === 0 && pressAndHoldMode) {
+        gravity = 0;
+        if (currentTween) {
+          currentTween.stop();
+        }
+      }
+    };
+    document.getElementById('toggle-btn-move').addEventListener('click', () => {
+      pressAndHoldMode = !pressAndHoldMode;
+    });
+    const directions = ['up', 'left', 'right', 'forward', 'back'];
+    directions.forEach(direction => {
+      const button = document.getElementById(`${direction}-btn`);
+      const startHandler = () => {
+        if (pressAndHoldMode) {
+          handleStart(direction, 2);
+        } else {
+          handleStart(direction, 1);
+        }
+      };
+      const endHandler = () => {
+        handleEnd(direction);
+      };
+      button.addEventListener('touchstart', startHandler);
+      button.addEventListener('mousedown', startHandler);
+      button.addEventListener('touchend', endHandler);
+      button.addEventListener('mouseup', endHandler);
+      button.addEventListener('mouseleave', endHandler);
+    });
+    const cubeControls = document.getElementById("controls");
+    const cameraControls = document.getElementById("camera-controls");
+    const keyboardInputToggle = document.getElementById('keyboardInputToggle');
+
+    function updateControlsVisibility() {
+      const isKeyboardInputEnabled = keyboardInputToggle.checked;
+      if (isKeyboardInputEnabled) {
+        cubeControls.style.display = "block";
+        cameraControls.style.display = "block";
+      } else {
+        cubeControls.style.display = "none";
+        cameraControls.style.display = "none";
+      }
+    }
+    const isFocusOnInput = () => {
+      const activeElement = document.activeElement;
+      return activeElement.tagName === 'INPUT' && activeElement.type === 'text' && activeElement.hasAttribute('readonly');
+    };
+    document.addEventListener('keydown', (event) => {
+      if (isFocusOnInput()) {
+        event.preventDefault();
+        return;
+      }
+      if (!isToggleKeyboardInput) {
+        if (cubeControls.style.display !== "none" || cameraControls.style.display !== "none") {
+          cubeControls.style.display = "none";
+          cameraControls.style.display = "none";
+          keyboardInputToggle.checked = false;
+          isToggleKeyboardInput = true;
+        }
+      }
+      const key = event.key;
+      if (event.key === keyBindings.pause) {
+        pauseUnpauseFunc()
+      } else if (key === 'Enter') {
+        const loadingScreen = document.getElementById('loading-screen');
+        const instructions = document.getElementById('instructions');
+        if (loadingScreen && loadingScreen.style.display !== 'none') {
+          closeLoadingScreen();
+        } else if (instructions && instructions.style.display !== 'none') {
+          closeInstructions();
+        }
+      } else if (key === keyBindings.upCube) {
+        handleStart('up', 2);
+      } else if (key === keyBindings.leftCube) {
+        handleStart('left', 2);
+      } else if (key === keyBindings.rightCube) {
+        handleStart('right', 2);
+      } else if (key === keyBindings.forwardCube) {
+        handleStart('forward', 2);
+      } else if (key === keyBindings.backCube) {
+        handleStart('back', 2);
+      } else if (key === keyBindings.upCamera) {
+        startMovingCamera('up');
+      } else if (key === keyBindings.downCamera) {
+        startMovingCamera('down');
+      } else if (key === keyBindings.leftCamera) {
+        startMovingCamera('left');
+      } else if (key === keyBindings.rightCamera) {
+        startMovingCamera('right');
+      }
+    });
+    document.addEventListener('keyup', (event) => {
+      const key = event.key;
+      if (key === keyBindings.upCube) {
+        handleEnd('up');
+      } else if (key === keyBindings.leftCube) {
+        handleEnd('left');
+      } else if (key === keyBindings.rightCube) {
+        handleEnd('right');
+      } else if (key === keyBindings.forwardCube) {
+        handleEnd('forward');
+      } else if (key === keyBindings.backCube) {
+        handleEnd('back');
+      } else if (key === keyBindings.upCamera || key === keyBindings.downCamera || key === keyBindings.leftCamera || key === keyBindings.rightCamera) {
+        stopMovingCamera();
+      }
+    });
+    const updateKeyBinding = (action, newKey) => {
+      keyBindings[action] = newKey;
+    };
+    const setupKeyInput = (inputId, action) => {
+      const inputElement = document.getElementById(inputId);
+      inputElement.addEventListener('keydown', (event) => {
+        const newKey = event.key;
+        inputElement.value = newKey;
+        updateKeyBinding(action, newKey);
+      });
+    };
+    setupKeyInput('key-upCamera', 'upCamera');
+    setupKeyInput('key-downCamera', 'downCamera');
+    setupKeyInput('key-leftCamera', 'leftCamera');
+    setupKeyInput('key-rightCamera', 'rightCamera');
+    setupKeyInput('key-upCube', 'upCube');
+    setupKeyInput('key-backCube', 'backCube');
+    setupKeyInput('key-leftCube', 'leftCube');
+    setupKeyInput('key-rightCube', 'rightCube');
+    setupKeyInput('key-forwardCube', 'forwardCube');
+    setupKeyInput('key-pause', 'pause');
+
+    function pauseUnpauseFunc() {
+      isPaused = !isPaused;
+      const pausedScreen = document.getElementById("pausedScreen");
+      if (!isPaused) {
+        pausedScreen.style.display = "none";
+      } else if (isPaused) {
+        pausedScreen.style.display = "block";
+      }
+    }
+    const handleCollision = () => {
+      const boxCube = new THREE.Box3().setFromObject(cube);
+      const boxPlatform = new THREE.Box3().setFromObject(platform);
+      const cubeScale = cube.scale.z;
+      if (boxCube.intersectsBox(boxPlatform)) {
+        const isAbove = boxCube.min.y < boxPlatform.max.y && boxCube.max.y > boxPlatform.max.y;
+        const isHorizontallyAligned = (boxCube.max.x - 0.05 * cubeScale >= boxPlatform.min.x && boxCube.min.x + 0.05 * cubeScale <= boxPlatform.max.x);
+        const isDepthAligned = (boxCube.max.z - 0.05 * cubeScale >= boxPlatform.min.z && boxCube.min.z + 0.05 * cubeScale <= boxPlatform.max.z);
+        if (isAbove && isHorizontallyAligned && isDepthAligned) {
+          cube.position.y = boxPlatform.max.y + (cube.geometry.parameters.height / 2) * cubeScale;
+          gravity = 0;
+        }
+      }
+    };
+    const updateZoom = () => {
+      const zoomValue = document.getElementById("zoom-slider").value;
+      const direction = new THREE.Vector3();
+      camera.getWorldDirection(direction);
+      direction.normalize();
+      const cubePosition = cube.position.clone();
+      const newCameraPosition = cubePosition.addScaledVector(direction, -zoomValue - 1 * cube.scale.z);
+      camera.position.copy(newCameraPosition);
+    };
+    const startMovingCamera = (direction) => {
+      if (!isPaused && !isMoving) {
+        moveDirection = direction;
+        isMoving = true;
+        moveCamera();
+      }
+    };
+    const stopMovingCamera = () => {
+      moveDirection = null;
+      isMoving = false;
+    };
+    const moveCamera = () => {
+      if (moveDirection) {
+        const moveDistance = 0.1;
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        switch (moveDirection) {
+          case 'up':
+            camera.position.addScaledVector(camera.up, moveDistance);
+            break;
+          case 'down':
+            camera.position.addScaledVector(camera.up, -moveDistance);
+            break;
+          case 'left':
+            const left = direction.crossVectors(camera.up, direction).normalize();
+            camera.position.addScaledVector(left, moveDistance);
+            break;
+          case 'right':
+            const right = direction.crossVectors(direction, camera.up).normalize();
+            camera.position.addScaledVector(right, moveDistance);
+            break;
+        }
+        updateCameraPosition();
+        requestAnimationFrame(moveCamera);
+      }
+    };
+    const toggleFog = () => {
+      const fogCheckbox = document.getElementById('fog-checkbox');
+      if (fogCheckbox.checked) {
+        const fogColor = new THREE.Color(0xdcdcdc);
+        const fog = new THREE.FogExp2(fogColor, 0.08);
+        scene.fog = fog;
+      } else {
+        scene.fog = null
+      }
+    };
+    const createStars = () => {
+      const starGeometry = new THREE.CylinderGeometry(0.2, 0.5, 1, 5);
+      const starMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffff00
+      });
+      const edgesMaterial = new THREE.LineBasicMaterial({
+        color: 0x000000
+      });
+      for (let i = 0; i < 10; i++) {
+        let star = new THREE.Mesh(starGeometry, starMaterial);
+        do {
+          star.position.x = (Math.random() - 0.5) * 20;
+          star.position.y = (Math.random() - 0.5) * 20;
+          star.position.z = (Math.random() - 0.5) * 20;
+        } while (star.position.y < -2);
+        scene.add(star);
+        stars.push(star);
+        const edgesGeometry = new THREE.EdgesGeometry(starGeometry);
+        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+        edges.position.copy(star.position);
+        scene.add(edges);
+        starEdges.push(edges);
+      }
+    };
+    const checkStarsCollection = () => {
+      const playerBox = new THREE.Box3().setFromObject(cube);
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+        const starBox = new THREE.Box3().setFromObject(star);
+        if (playerBox.intersectsBox(starBox)) {
+          const starPosition = star.position.clone();
+          if (star && star.geometry) {
+            scene.remove(stars[i]);
+            scene.remove(starEdges[i]);
+            stars.splice(i, 1);
+            starEdges.splice(i, 1);
+            updateScore();
+            createParticlesFromStar(starPosition, star.geometry);
+          }
+          break;
+        }
+      }
+    };
+    const createParticlesFromStar = (position, geometry) => {
+      const vertices = geometry.attributes.position.array;
+      const particleGeometry = new THREE.BufferGeometry();
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0xffff00,
+        size: 0.2
+      });
+      const particleVertices = [];
+      for (let i = 0; i < vertices.length; i += 3) {
+        const x = vertices[i];
+        const y = vertices[i + 1];
+        const z = vertices[i + 2];
+        particleVertices.push(x, y, z);
+      }
+      particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(particleVertices, 3));
+      const particles = new THREE.Points(particleGeometry, particleMaterial);
+      particles.position.copy(position);
+      const particleCount = particleGeometry.attributes.position.count;
+      const particleSpeeds = [];
+      for (let i = 0; i < particleCount; i++) {
+        const speed = new THREE.Vector3(
+          (Math.random() - 0.5) * 0.2,
+          (Math.random() - 0.5) * 0.2,
+          (Math.random() - 0.5) * 0.2
+        );
+        particleSpeeds.push(speed);
+      }
+      particlesArray.push({
+        particles,
+        particleSpeeds
+      });
+      scene.add(particles);
+      const tween = new TWEEN.Tween(particles.scale)
+        .to({
+          x: 2,
+          y: 2,
+          z: 2
+        }, 2000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete(() => {
+          scene.remove(particles);
+          particlesArray = particlesArray.filter(p => p.particles !== particles);
+        })
+        .start();
+    };
+    const updateParticles = () => {
+      for (const {
+          particles,
+          particleSpeeds
+        } of particlesArray) {
+        const positions = particles.geometry.attributes.position.array;
+        const particleCount = particles.geometry.attributes.position.count;
+        for (let i = 0; i < particleCount; i++) {
+          const index = i * 3;
+          const speed = particleSpeeds[i];
+          if (speed) {
+            positions[index] += speed.x;
+            positions[index + 1] += speed.y;
+            positions[index + 2] += speed.z;
+            speed.y -= particleGravity;
+          }
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
+      }
+    };
+    const updateScore = () => {
+      collectedStars++;
+      if (collectedStars === totalStars) {
+        totalStars += 10;
+        createStars();
+        showRandomMessage();
+      }
+      scoreElement.textContent = `${collectedStars}/${totalStars}`;
+    };
+    createStars();
+    const scoreElement = document.getElementById('score');
+    const messageContainer = document.getElementById('message-container');
+    const showMessage = (message) => {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      messageElement.classList.add('message');
+      messageContainer.appendChild(messageElement);
+      setTimeout(() => {
+        messageContainer.removeChild(messageElement);
+      }, 3000);
+    };
+    const randomMessages = [
+      'Good Job!',
+      'Well Done!',
+      'Amazing!',
+      'Awesome!',
+      'Excellent!',
+      'Fantastic!',
+      'Bravo!',
+      'Superb!',
+      'SIUUUU!',
+    ];
+    const showRandomMessage = () => {
+      const randomIndex = Math.floor(Math.random() * randomMessages.length);
+      const message = randomMessages[randomIndex];
+      showMessage(message);
+    };
+    const animate = () => {
+      TWEEN.update();
+      updateParticles();
+      updateCameraPosition();
+      updateMiniMap();
+      checkStarsCollection();
+      handleCollision();
+      renderer.render(scene, camera);
+      if (!isPaused) {
+        updateCubePosition();
+        document.getElementById('coordinates').innerText = `X: ${cube.position.x.toFixed(2)}, Y: ${cube.position.y.toFixed(2)}, Z: ${cube.position.z.toFixed(2)}`;
+        if (cube.position.y > -20) {
+          cube.position.y -= gravity;
+          gravity += 0.0015;
+        }
+      }
+      requestAnimationFrame(animate);
+    };
+    animate();
+  </script>
+</body>
+
+</html>
