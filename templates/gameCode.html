@@ -427,6 +427,7 @@
   const socket = io();
   let playerId = null;
   const cubes = {};
+  const activeTweens = {};
   const nicknames = {};
 
   socket.on('connect_player', (data) => {
@@ -537,15 +538,23 @@
     socket.emit('update_nickname', { nickname: newNickname });
   }
 
-  function animateCubeMovement(cube, targetPosition) {
+function animateCubeMovement(cube, targetPosition) {
+  if (activeTweens[cube.uuid]) {
+    activeTweens[cube.uuid].stop();
+  }
   const startPosition = cube.position.clone();
   const tween = new TWEEN.Tween(startPosition)
-    .to(targetPosition, 50)
+    .to(targetPosition, 1)
     .easing(TWEEN.Easing.Quadratic.Out)
     .onUpdate(() => {
       cube.position.set(startPosition.x, startPosition.y, startPosition.z);
     })
+    .onComplete(() => {
+      delete activeTweens[cube.uuid];
+    })
     .start();
+
+  activeTweens[cube.uuid] = tween;
 }
 
 </script>
