@@ -465,7 +465,8 @@
           createCube(id, data.position);
         }
       } else {
-        cubes[id].position.set(data.position.x, data.position.y, data.position.z);
+        const targetPosition = new THREE.Vector3(data.position.x, data.position.y, data.position.z);
+        animateCubeMovement(cubes[id], targetPosition);
         if (nicknames[id]) {
           nicknames[id].position.set(data.position.x, data.position.y + 1.5, data.position.z);
         }
@@ -535,6 +536,17 @@
   function updateNickname(newNickname) {
     socket.emit('update_nickname', { nickname: newNickname });
   }
+
+  function animateCubeMovement(cube, targetPosition) {
+  const startPosition = cube.position.clone();
+  const tween = new TWEEN.Tween(startPosition)
+    .to(targetPosition, 10)
+    .easing(TWEEN.Easing.Quadratic.Out)
+    .onUpdate(() => {
+      cube.position.set(startPosition.x, startPosition.y, startPosition.z);
+    })
+    .start();
+}
 
 </script>
 
