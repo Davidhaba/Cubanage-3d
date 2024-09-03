@@ -540,7 +540,7 @@
   function animateCubeMovement(cube, targetPosition) {
   const startPosition = cube.position.clone();
   const tween = new TWEEN.Tween(startPosition)
-    .to(targetPosition, 500)
+    .to(targetPosition, 50)
     .easing(TWEEN.Easing.Quadratic.Out)
     .onUpdate(() => {
       cube.position.set(startPosition.x, startPosition.y, startPosition.z);
