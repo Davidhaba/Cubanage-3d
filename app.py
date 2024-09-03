@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
@@ -14,7 +17,7 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     player_id = request.sid
-    print(f"Connection attempt from monitoring tool detected: " + request.headers.get('User-Agent', ''))
+    logging.info(f"Connection attempt from monitoring tool detected: " + request.headers.get('User-Agent', ''))
 
     players[player_id] = {'x': 0, 'y': 0, 'z': 0, 'nickname': 'Player_' + player_id[-4:]}
     emit('connect_player', {'id': player_id}, broadcast=True)
