@@ -14,6 +14,10 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     player_id = request.sid
+    if 'UptimeRobot' in request.headers.get('User-Agent', ''):
+        print(f"Connection attempt from monitoring tool detected: {user_agent}")
+        return
+
     players[player_id] = {'x': 0, 'y': 0, 'z': 0, 'nickname': 'Player_' + player_id[-4:]}
     emit('connect_player', {'id': player_id}, broadcast=True)
     emit('new_player', {'id': player_id, 'players': players}, broadcast=True)
