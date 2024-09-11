@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import logging
 
@@ -14,6 +14,10 @@ players = {}
 def index():
     return render_template('gameCode.html')
 
+@app.route('/BingSiteAuth.xml')
+def serve_bing_auth_file():
+    return send_from_directory('checkVerifications', 'BingSiteAuth.xml')
+    
 @socketio.on('connect')
 def handle_connect():
     player_id = request.sid
