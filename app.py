@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, abort
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import logging
+import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -14,10 +15,14 @@ players = {}
 def index():
     return render_template('gameCode.html')
 
-@app.route('/BingSiteAuth.xml')
-def serve_bing_auth_file():
-    return send_from_directory('checkVerifications', 'BingSiteAuth.xml')
-    
+@app.route('/<path:filename>')
+def serve_file(filename):
+    file_path = os.path.join('checkVerifications', filename)
+    if os.path.exists(file_path):
+        return send_from_directory('checkVerifications', filename)
+    else:
+        abort(404)
+
 @socketio.on('connect')
 def handle_connect():
     player_id = request.sid
