@@ -313,7 +313,7 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Umgekehrte Horizontal",
     verticalRotationOption: "Vertikal",
     reverseVerticalRotationOption: "Umgekehrte Vertikal",
-    playerCountLabel: "Spieler",
+    playerCountLabel: "Spieler:",
   },
   es: {
     termsText:
@@ -367,7 +367,7 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Horizontal Invertido",
     verticalRotationOption: "Vertical",
     reverseVerticalRotationOption: "Vertical Invertido",
-    playerCountLabel: "Jugadores",
+    playerCountLabel: "Jugadores:",
   }
 };
 
