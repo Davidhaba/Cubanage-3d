@@ -98,7 +98,8 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Reverse Horizontal",
     verticalRotationOption: "Vertical",
-    reverseVerticalRotationOption: "Reverse Vertical"
+    reverseVerticalRotationOption: "Reverse Vertical",
+    playerCountLabel: "Players:",
   },
   ua: {
     termsText:
@@ -150,7 +151,8 @@ const languageTexts = {
     horizontalRotationOption: "Горизонтальна",
     reverseHorizontalRotationOption: "Зворотна горизонтальна",
     verticalRotationOption: "Вертикальна",
-    reverseVerticalRotationOption: "Зворотна вертикальна"
+    reverseVerticalRotationOption: "Зворотна вертикальна",
+    playerCountLabel: "Гравці:",
   },
   ru: {
     termsText:
@@ -202,7 +204,8 @@ const languageTexts = {
     horizontalRotationOption: "Горизонтальная",
     reverseHorizontalRotationOption: "Обратная горизонтальная",
     verticalRotationOption: "Вертикальная",
-    reverseVerticalRotationOption: "Обратная вертикальная"
+    reverseVerticalRotationOption: "Обратная вертикальная",
+    playerCountLabel: "Игроки:",
   },
   pl: {
     termsText:
@@ -254,7 +257,8 @@ const languageTexts = {
     horizontalRotationOption: "Horyzontalna",
     reverseHorizontalRotationOption: "Odwrotna horyzontalna",
     verticalRotationOption: "Wertykalna",
-    reverseVerticalRotationOption: "Odwrotna wertykalna"
+    reverseVerticalRotationOption: "Odwrotna wertykalna",
+    playerCountLabel: "Gracze:",
   },
   de: {
     termsText:
@@ -308,7 +312,8 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Umgekehrte Horizontal",
     verticalRotationOption: "Vertikal",
-    reverseVerticalRotationOption: "Umgekehrte Vertikal"
+    reverseVerticalRotationOption: "Umgekehrte Vertikal",
+    playerCountLabel: "Spieler",
   },
   es: {
     termsText:
@@ -361,7 +366,8 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Horizontal Invertido",
     verticalRotationOption: "Vertical",
-    reverseVerticalRotationOption: "Vertical Invertido"
+    reverseVerticalRotationOption: "Vertical Invertido",
+    playerCountLabel: "Jugadores",
   }
 };
 
@@ -447,4 +453,5 @@ const changeLanguage = (sourceElement) => {
     texts.verticalRotationOption;
   document.getElementById("reverseVerticalRotationOption").textContent =
     texts.reverseVerticalRotationOption;
+  document.getElementById("player-count-label").textContent = texts.playerCountLabel;
 };
