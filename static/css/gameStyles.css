@@ -306,8 +306,7 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 200, 0.4);
   margin: 5px;
   padding: 10px;
   gap: 5px;
