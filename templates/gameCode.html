@@ -444,7 +444,10 @@
 
 <script>
 const initializeSocket = () => {
-  if (!socket) {
+ if (!socket) {
+   socket = io();
+ }
+ if (socket) {
   socket.on('monitoring_detected', (data) => {
       const monitoringMessage = document.getElementById('monitoringMessage');
       monitoringMessage.style.display = 'block';
