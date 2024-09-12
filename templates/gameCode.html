@@ -557,11 +557,15 @@ const initializeSocket = () => {
       y: cube.position.y,
       z: cube.position.z,
     };
-    socket.emit('update_position', { position });
+    if (socket) {
+      socket.emit('update_position', { position });
+    }
   }
 
   function updateNickname(newNickname) {
-    socket.emit('update_nickname', { nickname: newNickname });
+    if (socket) {
+      socket.emit('update_nickname', { nickname: newNickname });
+    }
   }
 
 </script>
@@ -1435,7 +1439,9 @@ const initializeSocket = () => {
       handleCollision();
       renderer.render(scene, camera);
       if (!isPaused) {
-        updateCubePosition();
+        if (socket) {
+          updateCubePosition();
+        }
         document.getElementById('coordinates').innerText = `X: ${cube.position.x.toFixed(2)}, Y: ${cube.position.y.toFixed(2)}, Z: ${cube.position.z.toFixed(2)}`;
         if (cube.position.y > -20) {
           cube.position.y -= gravity;
