@@ -435,15 +435,16 @@
       forwardCube: 'ArrowUp',
       pause: 'p',
     };
+    let socket;
+    let playerId = null;
+    const cubes = {};
+    const activeTweens = {};
+    const nicknames = {};
   </script>
 
 <script>
-  const socket = io();
-  let playerId = null;
-  const cubes = {};
-  const activeTweens = {};
-  const nicknames = {};
-
+const initializeSocket = () => {
+  if (!socket) {
   socket.on('monitoring_detected', (data) => {
       const monitoringMessage = document.getElementById('monitoringMessage');
       monitoringMessage.style.display = 'block';
@@ -514,7 +515,8 @@
       cubes[data.id].scale.set(data.size, data.size, data.size);
     }
   });
-
+  }
+}
   function createCube(id, position) {
     if (!cubes[id]) {
       const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -935,6 +937,7 @@
         updateVolume();
         showInstructions();
         isPaused = false;
+        initializeSocket();
       }
     }
     const raycaster = new THREE.Raycaster();
