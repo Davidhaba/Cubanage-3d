@@ -119,6 +119,9 @@
       <span id="starsText">Stars:</span>
       <span id="score">0/10</span>
     </div>
+    <div>
+      <p>Connected Players: <span id="player-count">0</span></p>
+    </div>
   </div>
   <div id="message-container"></div>
 
@@ -452,6 +455,7 @@
 
   socket.on('new_player', (data) => {
     const players = data.players;
+    document.getElementById('player-count').innerText = Object.keys(data.players).length;
     for (const id in players) {
       if (id !== playerId && !cubes[id]) {
         createCube(id, players[id]);
@@ -462,6 +466,7 @@
 
   socket.on('remove_player', (data) => {
     const id = data.id;
+    document.getElementById('player-count').innerText = Object.keys(data.players).length;
     if (cubes[id]) {
       scene.remove(cubes[id]);
       cubes[id].geometry.dispose();
