@@ -26,7 +26,11 @@ def serve_file(filename):
 @socketio.on('connect')
 def handle_connect():
     player_id = request.sid
-    logging.info(f"Connection attempt from monitoring tool detected: " + request.headers.get('User-Agent', ''))
+    user_agent = request.headers.get('User-Agent', '')
+    if any(agent in user_agent.lower() for agent in {'bot', 'tool'}):
+        logging.info(f"Виявлено моніторингове підключення від " + user_agent)
+        emit('monitoring_detected', {'message': 'You have been identified as a monitoring service and will not be connected to the game server.'}, to=player_id)
+        return
 
     players[player_id] = {'x': 0, 'y': 0, 'z': 0, 'nickname': 'Player_' + player_id[-4:]}
     emit('connect_player', {'id': player_id}, broadcast=True)
