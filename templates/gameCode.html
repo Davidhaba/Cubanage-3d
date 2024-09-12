@@ -315,9 +315,8 @@
 
   <div id="pausedScreen">
     <h2 id="h2Paused">Paused</h2>
-    <button class="control-button" id="settings-btn" onclick="openSettings()">Settings</button>
-
     <button class="control-button" id="continueButton" onclick="pauseUnpauseFunc()">Continue</button>
+    <button class="control-button" id="settings-btn" onclick="openSettings()">Settings</button>
   </div>
 
   <div id="settingsBindings-menu">
@@ -1216,7 +1215,7 @@ const initializeSocket = () => {
       if (!isPaused) {
         pausedScreen.style.display = "none";
       } else if (isPaused) {
-        pausedScreen.style.display = "block";
+        pausedScreen.style.display = "flex";
       }
     }
     const handleCollision = () => {
