@@ -300,7 +300,7 @@ body {
   margin-top: 5px;
 }
 
-.controls-camera {
+#controls-camera > div {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -314,7 +314,7 @@ body {
   gap: 5px;
   border-radius: 15px;
 }
-.controls-camera > div {
+#controls-camera {
   right: 10px;
   top: 10px;
 }
