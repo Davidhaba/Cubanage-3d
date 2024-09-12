@@ -96,7 +96,7 @@
   </div>
 
   <div id="miniMapContainer"></div>
-  <div id="controls-camera">
+  <div class="controls-camera">
     <div style="display: flex; flex-direction: row;">
       <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
       <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
@@ -115,12 +115,14 @@
         <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
       </div>
     </div>
+  </div>
+  <div class="controls-camera">
     <div id="score-counter">
       <span id="starsText">Stars:</span>
       <span id="score">0/10</span>
     </div>
     <div>
-      <p>Connected Players: <span id="player-count">0</span></p>
+      <p>Players: <span id="player-count">0</span></p>
     </div>
   </div>
   <div id="message-container"></div>
