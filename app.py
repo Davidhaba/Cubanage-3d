@@ -41,7 +41,7 @@ def handle_disconnect():
     player_id = request.sid
     if player_id in players:
         del players[player_id]
-        emit('remove_player', {'id': player_id}, broadcast=True)
+        emit('remove_player', {'id': player_id, 'players': players}, broadcast=True)
 
 @socketio.on('update_position')
 def handle_update_position(data):
