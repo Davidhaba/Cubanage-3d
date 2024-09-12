@@ -20,6 +20,8 @@
 </head>
 
 <body id="body">
+  <div id="monitoringMessage">You have been identified as monitoring.</div>
+  
   <div id="loading-screen">
     <select id="language-select-loadScreen" onchange="changeLanguage(this)">
       <option value="no" disabled="true" selected="true">Select language</option>
@@ -434,6 +436,15 @@
   const cubes = {};
   const activeTweens = {};
   const nicknames = {};
+
+  socket.on('monitoring_detected', (data) => {
+      const monitoringMessage = document.getElementById('monitoringMessage');
+      monitoringMessage.style.display = 'block';
+      monitoringMessage.innerText = data.message;
+      setTimeout(() => {
+        monitoringMessage.style.display = 'none';
+      }, 5000);
+  });
 
   socket.on('connect_player', (data) => {
     playerId = socket.id;
