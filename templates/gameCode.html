@@ -15,7 +15,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
   <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/gameStyles.css') }}">
+  <script src="{{ url_for('static', filename='gameScript.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='gameStyles.css') }}">
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
@@ -368,8 +369,6 @@
   </div>
 
   <audio id="startSound" src="https://dl.dropbox.com/scl/fi/c7jzfc37nfmttb5hz1jh2/sb_indreams-chosic.com.mp3?rlkey=1obsofmzjwe3sleiwu79l891r" preload="auto" onended="restartMusic()"></audio>
-
-  <script src="{{ url_for('static', filename='js/gameScript.js') }}"></script>
 
   <script>
     function openPrivacyPolicy() {
