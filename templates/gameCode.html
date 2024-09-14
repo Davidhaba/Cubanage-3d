@@ -21,8 +21,6 @@
 </head>
 
 <body id="body">
-  <div id="monitoringMessage">You have been identified as monitoring.</div>
-  
   <div id="loading-screen">
     <select id="language-select-loadScreen" onchange="changeLanguage(this)">
       <option value="no" disabled="true" selected="true">Select language</option>
@@ -49,7 +47,7 @@
       <p>Last updated: 7.08.2024</p>
 
       <h3>1. Introduction</h3>
-      <p>Welcome to "Cubanage 3D | Online Game". This privacy policy explains how we collect, use, and protect your information when you use our game.</p>
+      <p>Welcome to "Cubanage" - 3D G ame. This privacy policy explains how we collect, use, and protect your information when you use our game.</p>
 
       <h3>2. Information Collection</h3>
       <p>We do not collect any personal information from users of our game.</p>
@@ -118,7 +116,7 @@
       </div>
     </div>
   </div>
-  <div>
+  <div style="margin-top: 10px;">
     <div id="score-counter">
       <span id="starsText">Stars:</span>
       <span id="score">0/10</span>
@@ -216,6 +214,14 @@
         <input type="range" id="size-slider" min="0.5" max="2" step="0.1" value="1" oninput="updateCubeSize()">
       </div>
 
+      <div id="UIsize-controls">
+        <label for="UIsize-slider">
+          <span>UI controls Size:</span>
+          <span id="UISize-value">1.0</span>
+        </label>
+        <input type="range" id="UIsize-slider" min="0.5" max="2" step="0.1" value="1" oninput="updateUISize()">
+      </div>
+  
       <div id="fog-toggle">
         <label for="fog-checkbox">Enable Fog:</label>
         <input type="checkbox" id="fog-checkbox" onchange="toggleFog()">
@@ -440,7 +446,7 @@
     const nicknames = {};
   </script>
 
-<script>
+  <script>
 const initializeSocket = () => {
  if (!socket) {
    socket = io();
@@ -569,7 +575,7 @@ const initializeSocket = () => {
     }
   }
 
-</script>
+  </script>
 
   <script>
     function updateRotationType() {
@@ -773,8 +779,16 @@ const initializeSocket = () => {
       const newSize = parseFloat(sizeSlider.value);
       cube.scale.set(newSize, newSize, newSize);
       sizeLabel.textContent = `${newSize.toFixed(1)}`;
-      socket.emit('resize_cube', { size: newSize });
     }
+    function updateUISize() {
+  const newSize = document.getElementById('UIsize-slider').value;
+
+  document.getElementById('controls-camera').style.transform = `scale(${newSize})`;
+  document.getElementById('camera-controls').style.transform = `scale(${newSize})`;
+  document.getElementById('controls').style.transform = `scale(${newSize})`;
+  document.getElementById('UISize-value').textContent = newSize;
+}
+
     const instructions = document.getElementById('instructions');
 
     function showInstructions() {
@@ -861,7 +875,7 @@ const initializeSocket = () => {
 
     function spawnScreen() {
       toggleSpawnScreen = document.getElementById('spawn-screen');
-      if (toggleSpawnScreen.style.display == "flex") {
+      if (toggleSpawnScreen.style.display !== "none") {
         toggleSpawnScreen.style.display = "none";
       } else {
         toggleSpawnScreen.style.display = "flex";
@@ -942,7 +956,6 @@ const initializeSocket = () => {
         updateVolume();
         showInstructions();
         isPaused = false;
-        initializeSocket();
       }
     }
     const raycaster = new THREE.Raycaster();
@@ -1443,7 +1456,6 @@ const initializeSocket = () => {
         if (socket) {
           updateCubePosition();
         }
-        document.getElementById('coordinates').innerText = `X: ${cube.position.x.toFixed(2)}, Y: ${cube.position.y.toFixed(2)}, Z: ${cube.position.z.toFixed(2)}`;
         if (cube.position.y > -20) {
           cube.position.y -= gravity;
           gravity += 0.0015;
@@ -1451,6 +1463,11 @@ const initializeSocket = () => {
       }
       requestAnimationFrame(animate);
     };
+    setInterval(() => {
+      if (!isPaused) {
+        document.getElementById('coordinates').innerText = `X: ${cube.position.x.toFixed(2)}, Y: ${cube.position.y.toFixed(2)}, Z: ${cube.position.z.toFixed(2)}`;
+      }
+    }, 100);
     animate();
   </script>
 </body>
