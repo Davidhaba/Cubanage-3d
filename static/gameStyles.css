@@ -307,6 +307,7 @@ body {
   align-items: center;
   color: white;
   background-color: rgba(0, 0, 200, 0.4);
+
   padding: 10px;
   gap: 5px;
   border-radius: 15px;
@@ -421,24 +422,21 @@ body {
   margin-top: 10px;
 }
 
-#fog-checkbox,
-#toggle-btn-move,
-#toggle-map-rotate,
-#checkboxCameraLook,
-#checkboxAnimationSpawn,
-#toggle-music,
-#camera-toggle,
-#keyboardInputToggle {
+
+input[type="checkbox"] {
   appearance: none;
+  width: 40px;
   height: 20px;
-  background-color: #ddd;
+  background-color: #ccc;
   border-radius: 10px;
   outline: none;
+  cursor: pointer;
   margin-left: 10px;
-  transition: background-color 0.6s ease;
+  transition: all 0.3s ease;
   position: relative;
   margin-top: 0px;
 }
+
 #toggle-btn-move {
   margin-top: 2px;
 }
@@ -448,9 +446,6 @@ body {
   position: absolute;
 }
 
-input[type="checkbox"] {
-  width: 40px;
-}
 input[type="checkbox"]::before {
   content: "";
   width: 18px;
@@ -458,15 +453,30 @@ input[type="checkbox"]::before {
   background-color: #fff;
   border-radius: 50%;
   position: absolute;
-  top: 1px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 21px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   transition: 0.3s;
 }
 input[type="checkbox"]:checked::before {
-  right: 1px;
+  right: 0;
 }
-#body input[type="checkbox"]:checked {
+input[type="checkbox"]:checked {
   background-color: #5cb85c;
+}
+input[type="checkbox"]:hover {
+  background-color: #b0b0b0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+input[type="checkbox"]:checked:hover {
+  background-color: #389d38;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+input[type="checkbox"]:active::before {
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 #score-counter {
@@ -860,5 +870,5 @@ select::after {
   padding: 0;
   margin-top: 0px;
   line-height: 0px;
-    }
+}
   
