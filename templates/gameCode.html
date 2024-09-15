@@ -266,25 +266,29 @@
       <h2 id="h2-background"><br>Background</h2>
       <div id="sky-controls">
         <p class="p-color" id="textColorImages">Images</p>
-        <button onclick="changeSkyTexture('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg')">
-          <img class="selected-sky" src="https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg" alt="Sky 1">
-        </button>
-        <button onclick="changeSkyTexture('https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=')">
-          <img src="https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=" alt="Sky 2">
-        </button>
-        <button onclick="changeSkyTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU" alt="Sky 3">
-        </button>
-      </div>
-      <p class="p-color" id="textColorColors">Colors</p>
-      <div id="color-controls">
-        <button id="skyColorBlue" onclick="changeSkyColor(0x87CEEB)"></button>
-        <button id="skyColorGold" onclick="changeSkyColor(0xFFD700)"></button>
-        <button id="skyColorLightGreen" onclick="changeSkyColor(0x90EE90)"></button>
-      </div>
-      <p class="p-color" id="textColorOthers">Others</p>
-      <div id="color-controls-input">
-        <input type="color" id="color-background" onchange="changeSkyColor(this.value)">
+        <div class="background-controls">
+          <button onclick="changeSkyTexture('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg')">
+            <img class="selected-sky" src="https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg" alt="Sky 1">
+          </button>
+          <button onclick="changeSkyTexture('https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=')">
+            <img src="https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=" alt="Sky 2">
+          </button>
+          <button onclick="changeSkyTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU')">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU" alt="Sky 3">
+          </button>
+        </div>
+        <p class="p-color" id="textColorColors">Colors</p>
+        <div class="background-controls">
+          <button style="background-color: LightSkyBlue;" onclick="changeSkyColor(0x87CEEB)"></button>
+          <button style="background-color: LightGreen;" onclick="changeSkyColor(0xFFD700)"></button>
+          <button style="background-color: gold;" onclick="changeSkyColor(0x90EE90)"></button>
+        </div>
+        <p class="p-color" id="textColorOthers">Others</p>
+        <div class="background-controls">
+          <button>
+            <input type="color" id="color-background" onchange="changeSkyColor(this.value)">
+          </button>
+        </div>
       </div>
 
       <h2 id="h2-keyBindings"><br>Key Bindings</h2>
