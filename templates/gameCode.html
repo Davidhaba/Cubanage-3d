@@ -43,7 +43,7 @@
 
   <div id="privacy-policy-modal" class="modalTextsRules">
     <div class="modalTextsRules-content">
-      <span class="close" onclick="closePrivacyPolicy()">&times;</span>
+      <span class="close" onclick="closePrivacyPolicyAndTerms()">&times;</span>
       <h2>Privacy Policy</h2>
       <p>Last updated: 7.08.2024</p>
 
@@ -70,7 +70,7 @@
 
   <div id="terms-of-service-modal" class="modalTextsRules">
     <div class="modalTextsRules-content">
-      <span class="close" onclick="closeTermsOfService()">&times;</span>
+      <span class="close" onclick="closePrivacyPolicyAndTerms()">&times;</span>
       <h2>Terms of Service</h2>
       <p>Last updated: 7.08.2024</p>
 
@@ -383,18 +383,13 @@
 
   <script>
     function openPrivacyPolicy() {
-      document.getElementById('privacy-policy-modal').style.display = 'block';
+      document.getElementById('privacy-policy-modal').style.display = 'flex';
     }
-
-    function closePrivacyPolicy() {
-      document.getElementById('privacy-policy-modal').style.display = 'none';
-    }
-
     function openTermsOfService() {
-      document.getElementById('terms-of-service-modal').style.display = 'block';
+      document.getElementById('terms-of-service-modal').style.display = 'flex';
     }
-
-    function closeTermsOfService() {
+    function closePrivacyPolicyAndTerms() {
+      document.getElementById('privacy-policy-modal').style.display = 'none';
       document.getElementById('terms-of-service-modal').style.display = 'none';
     }
   </script>
