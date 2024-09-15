@@ -268,26 +268,26 @@
       <div id="sky-controls">
         <p class="p-color" id="textColorImages">Images</p>
         <div class="background-controls">
-          <button onclick="changeSkyTexture('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg')">
-            <img class="selected-sky" src="https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg" alt="Sky 1">
+          <button class="selected-sky" onclick="changeSkyBackground('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg', event)">
+            <img src="https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg" alt="Sky 1">
           </button>
-          <button onclick="changeSkyTexture('https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=')">
+          <button onclick="changeSkyBackground('https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=', event)">
             <img src="https://media.istockphoto.com/id/182179756/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BD%D0%B5%D0%B1%D0%BE-%D0%B8-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F.jpg?s=612x612&w=0&k=20&c=fBvcOH8Dy2FwKSEBKmyJtkh2GrDr7q2sSADzBw-xuAY=" alt="Sky 2">
           </button>
-          <button onclick="changeSkyTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU')">
+          <button onclick="changeSkyBackground('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU', event)">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZn1mkE6KO6AKItsBoOLicJsCyfpJMW4hdg&usqp=CAU" alt="Sky 3">
           </button>
         </div>
         <p class="p-color" id="textColorColors">Colors</p>
         <div class="background-controls">
-          <button style="background-color: LightSkyBlue;" onclick="changeSkyColor(0x87CEEB)"></button>
-          <button style="background-color: LightGreen;" onclick="changeSkyColor(0xFFD700)"></button>
-          <button style="background-color: gold;" onclick="changeSkyColor(0x90EE90)"></button>
+          <button style="background-color: LightSkyBlue;" onclick="changeSkyBackground('#87CEEB', event)"></button>
+          <button style="background-color: LightGreen;" onclick="changeSkyBackground('#90EE90', event)"></button>
+          <button style="background-color: gold;" onclick="changeSkyBackground('#FFD700', event)"></button>
         </div>
         <p class="p-color" id="textColorOthers">Others</p>
         <div class="background-controls">
           <button>
-            <input type="color" id="color-background" onchange="changeSkyColor(this.value)">
+            <input type="color" id="color-background" onchange="changeSkyBackground(this.value, event)">
           </button>
         </div>
       </div>
@@ -410,7 +410,6 @@
     let isMoving = false;
     let isPaused = true;
     const textureLoader = new THREE.TextureLoader();
-    let skyTexture = textureLoader.load('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg');
     let verticalLine;
     let horizontalLine;
     let followCube = false;
@@ -426,12 +425,9 @@
     let collectedStars = 0;
     let particlesArray = [];
     let particleGravity = 0.004;
+    let skyTexture, skyMaterial, sky;
     const skyGeometry = new THREE.SphereBufferGeometry(800, 100, 100);
-    let skyMaterial = new THREE.MeshBasicMaterial({
-      map: skyTexture,
-      side: THREE.BackSide
-    });
-    let sky = new THREE.Mesh(skyGeometry, skyMaterial);
+
     const keyBindings = {
       upCamera: 'w',
       downCamera: 's',
@@ -839,44 +835,35 @@ const initializeSocket = () => {
         closeTermsOfService();
       }
     };
-    const changeSkyTexture = (imageUrl) => {
-      if (imageUrl) {
-        skyTexture = textureLoader.load(imageUrl);
-      } else {
-        skyTexture = textureLoader.load('https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg');
-      }
-      skyMaterial.map = skyTexture;
-      skyMaterial.needsUpdate = true;
-      scene.remove(sky);
-      sky = new THREE.Mesh(skyGeometry, skyMaterial);
-      scene.add(sky);
-      sky.position.y = 100;
-      const selectedSkyElements = document.querySelectorAll('.selected-sky');
-      selectedSkyElements.forEach(element => {
-        element.classList.remove('selected-sky');
-      });
-      const clickedButton = event.target.closest('button');
-      if (clickedButton) {
-        const clickedImg = clickedButton.querySelector('img');
-        clickedImg.classList.add('selected-sky');
-      }
-    };
-    scene.add(sky);
-    sky.position.y = 100;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    const changeSkyColor = (color) => {
-      scene.remove(sky);
-      scene.background = new THREE.Color(color);
-      const selectedSkyElements = document.querySelectorAll('.selected-sky');
-      selectedSkyElements.forEach(element => {
-        element.classList.remove('selected-sky');
-      })
-      const clickedButton = event.target.closest('button');
-      if (clickedButton) {
-        clickedButton.classList.add('selected-sky');
+
+    function changeSkyBackground(input, event) {
+      if (!input) {
+        input = "black";
       }
-    };
+      scene.remove(sky);
+      if (input.startsWith('http')) {
+        skyTexture = textureLoader.load(input);
+        skyMaterial = new THREE.MeshBasicMaterial({map: skyTexture, side: THREE.BackSide});
+        sky = new THREE.Mesh(skyGeometry, skyMaterial);
+        scene.add(sky);
+        sky.position.y = 100;
+      } else {
+        scene.background = new THREE.Color(input);
+      }
+      if (event) {
+        const selectedSkyElements = document.querySelectorAll('.selected-sky');
+        selectedSkyElements.forEach(element => {
+          element.classList.remove('selected-sky');
+        })
+        const clickedButton = event.target.closest('button');
+        if (clickedButton) {
+          clickedButton.classList.add('selected-sky');
+        }
+      }
+    }
+    changeSkyBackground("https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg");
 
     function spawnScreen() {
       toggleSpawnScreen = document.getElementById('spawn-screen');
