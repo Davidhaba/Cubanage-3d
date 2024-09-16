@@ -33,8 +33,7 @@ def handle_connect():
         return
 
     players[player_id] = {'x': 0, 'y': 0, 'z': 0, 'nickname': 'Player_' + player_id[-4:]}
-    emit('connect_player', {'id': player_id}, broadcast=True)
-    emit('new_player', {'id': player_id, 'players': players}, broadcast=True)
+    emit('connect_player', {'id': player_id, 'players': players}, broadcast=True)
 
 @socketio.on('disconnect')
 def handle_disconnect():
