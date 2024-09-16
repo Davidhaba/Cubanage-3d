@@ -943,6 +943,7 @@ const initializeSocket = () => {
         updateVolume();
         showInstructions();
         isPaused = false;
+        initializeSocket();
       }
     }
     const raycaster = new THREE.Raycaster();
