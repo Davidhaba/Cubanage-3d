@@ -459,9 +459,6 @@ const initializeSocket = () => {
 
   socket.on('connect_player', (data) => {
     playerId = socket.id;
-  });
-
-  socket.on('new_player', (data) => {
     const players = data.players;
     document.getElementById('player-count').innerText = Object.keys(data.players).length;
     for (const id in players) {
