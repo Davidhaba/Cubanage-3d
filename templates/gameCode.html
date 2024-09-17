@@ -415,6 +415,8 @@
   </script>
 
   <script>
+    let rotationSpeed = 0.01;
+    let force = 2;
     let isToggleKeyboardInput = false;
     let isInteracting = false;
     let startX, startY;
@@ -454,6 +456,14 @@
       forwardCube: 'ArrowUp',
       pause: 'p',
     };
+    const availableLanguages = [
+      { code: "en", name: "English" },
+      { code: "ua", name: "Українська" },
+      { code: "ru", name: "Русский" },
+      { code: "pl", name: "Polski" },
+      { code: "es", name: "Español" },
+      { code: "de", name: "Deutsch" }
+    ];
     let socket;
     let playerId = null;
     const cubes = {};
