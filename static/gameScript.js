@@ -1,32 +1,18 @@
-let rotationSpeed = 0.01;
 const updateRotationSpeed = () => {
   const rotationSpeedSlider = document.getElementById("rotation-speed-slider");
   const rotationValue = document.getElementById("rotation-speed-value");
-
   rotationSpeed = parseFloat(rotationSpeedSlider.value);
   rotationValue.textContent = rotationSpeed
     .toFixed(3)
     .replace(/^0\.0/, "0.")
     .replace(/^0./, "");
 };
-
-let force = 2;
 const updateForce = () => {
   const forceSlider = document.getElementById("force-slider");
   const forceValueElement = document.getElementById("force-value");
-
   force = parseFloat(forceSlider.value);
   forceValueElement.textContent = force;
 };
-
-const availableLanguages = [
-  { code: "en", name: "English" },
-  { code: "ua", name: "Українська" },
-  { code: "ru", name: "Русский" },
-  { code: "pl", name: "Polski" },
-  { code: "es", name: "Español" },
-  { code: "de", name: "Deutsch" }
-];
 function populateLanguageSelects() {
   const selectElements = [
     document.getElementById("language-select"),
@@ -44,14 +30,13 @@ function populateLanguageSelects() {
 document.addEventListener("DOMContentLoaded", (event) => {
   populateLanguageSelects();
 });
-
 const languageTexts = {
   en: {
     termsText:
       "By continuing, you agree to our <a href='#' onclick='openPrivacyPolicy()'>Privacy Policy</a> and <a href='#' onclick='openTermsOfService()'>Terms of Service</a>.",
     instructions: "Instructions",
     h6LoadingScreen:
-      "Write in the comments what you would like to see in this game and help me make it better. Your ideas could become part of the next update!<br><br>Have a good game!<br>Thanks for 1k views, I love you🔥🥹",
+      "Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends, as this game is hosted on a server along with other players.<br>Enjoy the game🔥",
     music: "Music",
     graphics: "<br>Graphics",
     enableFog: "Enable Fog:",
@@ -98,14 +83,15 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Reverse Horizontal",
     verticalRotationOption: "Vertical",
-    reverseVerticalRotationOption: "Reverse Vertical"
+    reverseVerticalRotationOption: "Reverse Vertical",
+    playerCountLabel: "Players:",
   },
   ua: {
     termsText:
       "Продовжуючи, ви погоджуєтеся з нашою <a href='#' onclick='openPrivacyPolicy()'>Політикою конфіденційності</a> та <a href='#' onclick='openTermsOfService()'>Умовами обслуговування.</a>.",
     instructions: "Інструкція",
     h6LoadingScreen:
-      "Пишіть у коментарі, що ви хотіли б бачити в цій грі, та допоможіть мені зробити її кращою. Ваші ідеї можуть стати частиною наступного оновлення!<br><br>Гарної гри!<br>Дякую за 1 тисячу переглядів, я вас люблю🔥🥹",
+      "Cubanage 3D — це гра про керування кубом і збір фігур. Розважайтеся з друзями, оскільки ця гра розміщена на сервері разом з іншими гравцями.<br>Приємної гри🔥",
     music: "Музика",
     graphics: "<br>Графіка",
     enableFog: "Увімкнути туман:",
@@ -150,14 +136,15 @@ const languageTexts = {
     horizontalRotationOption: "Горизонтальна",
     reverseHorizontalRotationOption: "Зворотна горизонтальна",
     verticalRotationOption: "Вертикальна",
-    reverseVerticalRotationOption: "Зворотна вертикальна"
+    reverseVerticalRotationOption: "Зворотна вертикальна",
+    playerCountLabel: "Гравці:",
   },
   ru: {
     termsText:
       "Продолжая, вы соглашаетесь с нашей <a href='#' onclick='openPrivacyPolicy()'>Политикой конфиденциальности</a> и <a href='#' onclick='openTermsOfService()'>Условиями использования</a>.",
     instructions: "Инструкции",
     h6LoadingScreen:
-      "Пишите в комментариях, что вы хотели бы видеть в этой игре, и помогите мне сделать её лучше. Ваши идеи могут стать частью следующего обновления!<br><br>Хорошей игры!<br>Спасибо за 1k просмотров, я вас люблю🔥🥹",
+      "Cubanage 3D — это игра про управление кубом и сбор фигур. Развлекайтесь с друзьями, так как эта игра размещена на сервере вместе с другими игроками.<br>Приятной игры🔥",
     music: "Музыка",
     graphics: "<br>Графика",
     enableFog: "Включить туман:",
@@ -202,14 +189,15 @@ const languageTexts = {
     horizontalRotationOption: "Горизонтальная",
     reverseHorizontalRotationOption: "Обратная горизонтальная",
     verticalRotationOption: "Вертикальная",
-    reverseVerticalRotationOption: "Обратная вертикальная"
+    reverseVerticalRotationOption: "Обратная вертикальная",
+    playerCountLabel: "Игроки:",
   },
   pl: {
     termsText:
       "Kontynuując, zgadzasz się z naszą <a href='#' onclick='openPrivacyPolicy()'>Polityką prywatności</a> i <a href='#' onclick='openTermsOfService()'>Regulaminem</a>.",
     instructions: "Instrukcje",
     h6LoadingScreen:
-      "Piszcie w komentarzach, co chcielibyście zobaczyć w tej grze i pomóżcie mi ją ulepszyć. Wasze pomysły mogą stać się częścią następnej aktualizacji!<br><br>Miłej gry!<br>Dziękuję za 1 tysiąc wyświetleń, kocham was🔥🥹",
+      "Cubanage 3D es un juego sobre controlar un cubo y recolectar formas. Diviértete con amigos, ya que este juego está alojado en un servidor junto con otros jugadores.<br>¡Disfruta del juego!🔥",
     music: "Muzyka",
     graphics: "<br>Grafika",
     enableFog: "Włącz mgłę:",
@@ -254,14 +242,15 @@ const languageTexts = {
     horizontalRotationOption: "Horyzontalna",
     reverseHorizontalRotationOption: "Odwrotna horyzontalna",
     verticalRotationOption: "Wertykalna",
-    reverseVerticalRotationOption: "Odwrotna wertykalna"
+    reverseVerticalRotationOption: "Odwrotna wertykalna",
+    playerCountLabel: "Gracze:",
   },
   de: {
     termsText:
       "Durch die Fortsetzung stimmen Sie unserer <a href='#' onclick='openPrivacyPolicy()'>Datenschutzrichtlinie</a> und den <a href='#' onclick='openTermsOfService()'>Nutzungsbedingungen</a> zu.",
     instructions: "Anleitung",
     h6LoadingScreen:
-      "Schreibt in die Kommentare, was ihr in diesem Spiel sehen möchtet, und helft mir, es besser zu machen. Eure Ideen könnten Teil des nächsten Updates werden!<br><br>Viel Spaß beim Spielen!<br>Danke für 1k Aufrufe, ich liebe euch🔥🥹",
+      "Cubanage 3D ist ein Spiel über das Steuern eines Würfels und das Sammeln von Formen. Habt Spaß mit Freunden, denn dieses Spiel ist auf einem Server zusammen mit anderen Spielern gehostet.<br>Viel Spaß beim Spielen🔥",
     music: "Musik",
     graphics: "<br>Grafiken",
     enableFog: "Nebel aktivieren:",
@@ -308,14 +297,15 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Umgekehrte Horizontal",
     verticalRotationOption: "Vertikal",
-    reverseVerticalRotationOption: "Umgekehrte Vertikal"
+    reverseVerticalRotationOption: "Umgekehrte Vertikal",
+    playerCountLabel: "Spieler:",
   },
   es: {
     termsText:
       "Al continuar, aceptas nuestra <a href='#' onclick='openPrivacyPolicy()'>Política de privacidad</a> y nuestros <a href='#' onclick='openTermsOfService()'>Términos de servicio</a>.",
     instructions: "Instrucciones",
     h6LoadingScreen:
-      "Escribe en los comentarios qué te gustaría ver en este juego y ayúdame a mejorarlo. ¡Tus ideas podrían formar parte de la próxima actualización!<br><br>¡Que tengas un buen juego!<br>Gracias por 1k vistas, los amo🔥🥹",
+      "Cubanage 3D es un juego sobre controlar un cubo y recolectar formas. Diviértete con amigos, ya que este juego está alojado en un servidor junto con otros jugadores.<br>¡Disfruta del juego!🔥",
     music: "Música",
     graphics: "<br>Gráficos",
     enableFog: "Activar niebla:",
@@ -361,7 +351,8 @@ const languageTexts = {
     horizontalRotationOption: "Horizontal",
     reverseHorizontalRotationOption: "Horizontal Invertido",
     verticalRotationOption: "Vertical",
-    reverseVerticalRotationOption: "Vertical Invertido"
+    reverseVerticalRotationOption: "Vertical Invertido",
+    playerCountLabel: "Jugadores:",
   }
 };
 
@@ -381,7 +372,6 @@ const changeLanguage = (sourceElement) => {
       texts.continueButtonText;
   }
   document.getElementById("h6LoadingScreen").innerHTML = texts.h6LoadingScreen;
-
   document.getElementById("instructions-btn").textContent = texts.instructions;
   document.getElementById("musicTextSettings").textContent = texts.music;
   document.getElementById("fog-checkbox").previousElementSibling.textContent =
@@ -447,4 +437,5 @@ const changeLanguage = (sourceElement) => {
     texts.verticalRotationOption;
   document.getElementById("reverseVerticalRotationOption").textContent =
     texts.reverseVerticalRotationOption;
+  document.getElementById("player-count-label").textContent = texts.playerCountLabel;
 };
