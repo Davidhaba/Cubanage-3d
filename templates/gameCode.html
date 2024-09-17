@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cubanage 3D | Online Game</title>
-<meta property="og:description" content="Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends, as this game is hosted on a server with other players.">
-<meta property="og:image" content="{{ url_for('static', filename='favicon.ico') }}">
-<meta property="og:url" content="https://cubanage-3d.onrender.com/">
-<meta property="og:type" content="website">
+  <meta property="og:description" content="Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends, as this game is hosted on a server with other players.">
+  <meta property="og:image" content="{{ url_for('static', filename='favicon.ico') }}">
+  <meta property="og:url" content="https://cubanage-3d.onrender.com/">
+  <meta property="og:type" content="website">
   <meta name="description" content="Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends, as this game is hosted on a server with other players.">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script type="text/javascript" src="https://cdn.rawgit.com/kripken/ammo.js/master/builds/ammo.js"></script>
@@ -31,7 +31,7 @@
     <div id="h1LoadingScreen">
       <h1 style="margin: 0;">L</h1>
       <div id="loader"></div>
-      <h1 style="margin: 0;">ading...</h1>
+      <h1 style="margin: 0;">ADING...</h1>
     </div>
     <button class="control-button" onclick="closeLoadingScreen()" id="closeLoadingScreenBtn">Continue</button>
     <p id="terms-text">
@@ -98,34 +98,34 @@
   <div id="miniMapContainer"></div>
   <div id="controls-camera">
     <div>
-    <div style="display: flex; flex-direction: row;">
-      <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
-      <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
-    </div>
-    <div id="zoom-controls">
-      <label for="zoom-slider">Zoom / Z:</label>
-      <input type="range" id="zoom-slider" min="1" max="40" step="0.2" value="10" oninput="updateZoom()">
-    </div>
-    <div style="display: flex; flex-direction: column;">
-      <div id="camera-follow">
-        <label id="camera-follow-label" for="camera-toggle">Follow the cube:</label>
-        <input type="checkbox" id="camera-toggle" onchange="toggleCamera()">
+      <div style="display: flex; flex-direction: row;">
+        <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
+        <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
       </div>
-      <div id="toggle-look-camera">
-        <label for="checkboxCameraLook" id="cameraLookToggleText">Look at the cube:</label>
-        <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
+      <div id="zoom-controls">
+        <label for="zoom-slider">Zoom / Z:</label>
+        <input type="range" id="zoom-slider" min="1" max="40" step="0.2" value="10" oninput="updateZoom()">
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <div id="camera-follow">
+          <label id="camera-follow-label" for="camera-toggle">Follow the cube:</label>
+          <input type="checkbox" id="camera-toggle" onchange="toggleCamera()">
+        </div>
+        <div id="toggle-look-camera">
+          <label for="checkboxCameraLook" id="cameraLookToggleText">Look at the cube:</label>
+          <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
+        </div>
       </div>
     </div>
-  </div>
-  <div style="margin-top: 10px;">
-    <div id="score-counter">
-      <span id="starsText">Stars:</span>
-      <span id="score">0/10</span>
+    <div style="margin-top: 10px;">
+      <div id="score-counter">
+        <span id="starsText">Stars:</span>
+        <span id="score">0/10</span>
+      </div>
+      <div>
+        <p style="margin: 0; padding: 0;"><span id="player-count-label">Players:</span> <span id="player-count">0</span></p>
+      </div>
     </div>
-    <div>
-      <p style="margin: 0; padding: 0;"><span id="player-count-label">Players:</span> <span id="player-count">0</span></p>
-    </div>
-  </div>
   </div>
   <div id="message-container"></div>
 
@@ -222,7 +222,7 @@
         </label>
         <input type="range" id="UIsize-slider" min="0.5" max="2" step="0.1" value="1" oninput="updateUISize()">
       </div>
-  
+
       <div id="fog-toggle">
         <label for="fog-checkbox">Enable Fog:</label>
         <input type="checkbox" id="fog-checkbox" onchange="toggleFog()">
@@ -382,15 +382,34 @@
   <audio id="startSound" src="https://dl.dropbox.com/scl/fi/c7jzfc37nfmttb5hz1jh2/sb_indreams-chosic.com.mp3?rlkey=1obsofmzjwe3sleiwu79l891r" preload="auto" onended="restartMusic()"></audio>
 
   <script>
+    const modalTextsRulesContent = document.querySelectorAll(".modalTextsRules-content");
+
     function openPrivacyPolicy() {
       document.getElementById('privacy-policy-modal').style.display = 'flex';
+      setTimeout(() => {
+        modalTextsRulesContent.forEach(element => {
+          element.classList.add('show');
+        });
+      }, 10);
     }
+
     function openTermsOfService() {
       document.getElementById('terms-of-service-modal').style.display = 'flex';
+      setTimeout(() => {
+        modalTextsRulesContent.forEach(element => {
+          element.classList.add('show');
+        });
+      }, 10);
     }
+
     function closePrivacyPolicyAndTerms() {
-      document.getElementById('privacy-policy-modal').style.display = 'none';
-      document.getElementById('terms-of-service-modal').style.display = 'none';
+      modalTextsRulesContent.forEach(element => {
+        element.classList.remove('show');
+      });
+      setTimeout(() => {
+        document.getElementById('privacy-policy-modal').style.display = 'none';
+        document.getElementById('terms-of-service-modal').style.display = 'none';
+      }, 290);
     }
   </script>
 
@@ -422,7 +441,6 @@
     let particleGravity = 0.004;
     let skyTexture, skyMaterial, sky;
     const skyGeometry = new THREE.SphereBufferGeometry(800, 100, 100);
-
     const keyBindings = {
       upCamera: 'w',
       downCamera: 's',
@@ -443,131 +461,132 @@
   </script>
 
   <script>
-const initializeSocket = () => {
- if (!socket) {
-   socket = io();
- }
- if (socket) {
-  socket.on('monitoring_detected', (data) => {
-      const monitoringMessage = document.getElementById('monitoringMessage');
-      monitoringMessage.style.display = 'block';
-      monitoringMessage.innerText = data.message;
-      setTimeout(() => {
-        monitoringMessage.style.display = 'none';
-      }, 5000);
-  });
-
-  socket.on('connect_player', (data) => {
-    playerId = socket.id;
-    const players = data.players;
-    document.getElementById('player-count').innerText = Object.keys(data.players).length;
-    for (const id in players) {
-      if (id !== playerId && !cubes[id]) {
-        createCube(id, players[id]);
-        createNickname(id, players[id].nickname);
+    const initializeSocket = () => {
+      if (!socket) {
+        socket = io();
+      }
+      if (socket) {
+        socket.on('monitoring_detected', (data) => {
+          const monitoringMessage = document.getElementById('monitoringMessage');
+          monitoringMessage.style.display = 'block';
+          monitoringMessage.innerText = data.message;
+          setTimeout(() => {
+            monitoringMessage.style.display = 'none';
+          }, 5000);
+        });
+        socket.on('connect_player', (data) => {
+          playerId = socket.id;
+          const players = data.players;
+          document.getElementById('player-count').innerText = Object.keys(data.players).length;
+          for (const id in players) {
+            if (id !== playerId && !cubes[id]) {
+              createCube(id, players[id]);
+              createNickname(id, players[id].nickname);
+            }
+          }
+        });
+        socket.on('remove_player', (data) => {
+          const id = data.id;
+          document.getElementById('player-count').innerText = Object.keys(data.players).length;
+          if (cubes[id]) {
+            scene.remove(cubes[id]);
+            cubes[id].geometry.dispose();
+            cubes[id].material.dispose();
+            delete cubes[id];
+          }
+          if (nicknames[id]) {
+            scene.remove(nicknames[id]);
+            delete nicknames[id];
+          }
+        });
+        socket.on('update_position', (data) => {
+          if (!isPaused) {
+            const id = data.id;
+            if (!cubes[id]) {
+              if (playerId && id !== playerId) {
+                createCube(id, data.position);
+              }
+            } else {
+              cubes[id].position.set(data.position.x, data.position.y, data.position.z);
+              if (nicknames[id]) {
+                nicknames[id].position.set(data.position.x, data.position.y + 1.5, data.position.z);
+              }
+            }
+          }
+        });
+        socket.on('update_nicknames', (data) => {
+          const players = data.players;
+          for (const id in players) {
+            if (nicknames[id]) {
+              nicknames[id].text = players[id].nickname;
+              nicknames[id].geometry.needsUpdate = true;
+            }
+          }
+        });
+        socket.on('resize_cube', (data) => {
+          if (cubes[data.id]) {
+            cubes[data.id].scale.set(data.size, data.size, data.size);
+          }
+        });
       }
     }
-  });
 
-  socket.on('remove_player', (data) => {
-    const id = data.id;
-    document.getElementById('player-count').innerText = Object.keys(data.players).length;
-    if (cubes[id]) {
-      scene.remove(cubes[id]);
-      cubes[id].geometry.dispose();
-      cubes[id].material.dispose();
-      delete cubes[id];
-    }
-    if (nicknames[id]) {
-      scene.remove(nicknames[id]);
-      delete nicknames[id];
-    }
-  });
-
-  socket.on('update_position', (data) => {
-    if (!isPaused) {
-      const id = data.id;
+    function createCube(id, position) {
       if (!cubes[id]) {
-        if (playerId && id !== playerId) {
-          createCube(id, data.position);
-        }
-      } else {
-        cubes[id].position.set(data.position.x, data.position.y, data.position.z);
-        if (nicknames[id]) {
-          nicknames[id].position.set(data.position.x, data.position.y + 1.5, data.position.z);
-        }
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshNormalMaterial();
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.set(position.x, position.y, position.z);
+        scene.add(cube);
+        cubes[id] = cube;
       }
     }
-  });
 
-  socket.on('update_nicknames', (data) => {
-    const players = data.players;
-    for (const id in players) {
-      if (nicknames[id]) {
-        nicknames[id].text = players[id].nickname;
-        nicknames[id].geometry.needsUpdate = true;
+    function createNickname(id, nickname) {
+      const texture = new THREE.CanvasTexture(createTextCanvas(nickname));
+      const material = new THREE.SpriteMaterial({
+        map: texture
+      });
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(1, 0.3, 1);
+      sprite.position.set(cubes[id].position.x, cubes[id].position.y + 1.5, cubes[id].position.z);
+      scene.add(sprite);
+      nicknames[id] = sprite;
+    }
+
+    function createTextCanvas(text) {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context.font = '32px Arial';
+      canvas.width = context.measureText(text).width;
+      canvas.height = 32;
+      context.font = '32px Arial';
+      context.textBaseline = 'top';
+      context.fillStyle = 'white';
+      context.fillText(text, 0, 0);
+      return canvas;
+    }
+
+    function updateCubePosition() {
+      const position = {
+        x: cube.position.x,
+        y: cube.position.y,
+        z: cube.position.z,
+      };
+      if (socket) {
+        socket.emit('update_position', {
+          position
+        });
       }
     }
-  });
 
-  socket.on('resize_cube', (data) => {
-    if (cubes[data.id]) {
-      cubes[data.id].scale.set(data.size, data.size, data.size);
+    function updateNickname(newNickname) {
+      if (socket) {
+        socket.emit('update_nickname', {
+          nickname: newNickname
+        });
+      }
     }
-  });
-  }
-}
-  function createCube(id, position) {
-    if (!cubes[id]) {
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshNormalMaterial();
-      const cube = new THREE.Mesh(geometry, material);
-      cube.position.set(position.x, position.y, position.z);
-      scene.add(cube);
-      cubes[id] = cube;
-    }
-  }
-
-  function createNickname(id, nickname) {
-    const texture = new THREE.CanvasTexture(createTextCanvas(nickname));
-    const material = new THREE.SpriteMaterial({ map: texture });
-    const sprite = new THREE.Sprite(material);
-    sprite.scale.set(1, 0.3, 1);
-    sprite.position.set(cubes[id].position.x, cubes[id].position.y + 1.5, cubes[id].position.z);
-    scene.add(sprite);
-    nicknames[id] = sprite;
-  }
-
-  function createTextCanvas(text) {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    context.font = '32px Arial';
-    canvas.width = context.measureText(text).width;
-    canvas.height = 32;
-    context.font = '32px Arial';
-    context.textBaseline = 'top';
-    context.fillStyle = 'white';
-    context.fillText(text, 0, 0);
-    return canvas;
-  }
-
-  function updateCubePosition() {
-    const position = {
-      x: cube.position.x,
-      y: cube.position.y,
-      z: cube.position.z,
-    };
-    if (socket) {
-      socket.emit('update_position', { position });
-    }
-  }
-
-  function updateNickname(newNickname) {
-    if (socket) {
-      socket.emit('update_nickname', { nickname: newNickname });
-    }
-  }
-
   </script>
 
   <script>
@@ -747,10 +766,8 @@ const initializeSocket = () => {
     }
 
     function restartMusic() {
-      setTimeout(function() {
-        startSound.currentTime = 0;
-        startSound.play();
-      }, 1000);
+      startSound.currentTime = 0;
+      startSound.play();
     }
     const updateQuality = () => {
       const qualityLevel = document.getElementById("quality-slider").value;
@@ -773,23 +790,22 @@ const initializeSocket = () => {
       cube.scale.set(newSize, newSize, newSize);
       sizeLabel.textContent = `${newSize.toFixed(1)}`;
     }
+
     function updateUISize() {
-  const newSize = document.getElementById('UIsize-slider').value;
-
-  document.getElementById('controls-camera').style.transform = `scale(${newSize})`;
-  document.getElementById('camera-controls').style.transform = `scale(${newSize})`;
-  document.getElementById('controls').style.transform = `scale(${newSize})`;
-  document.getElementById('UISize-value').textContent = newSize;
-}
-
+      const newSize = document.getElementById('UIsize-slider').value;
+      document.getElementById('controls-camera').style.transform = `scale(${newSize})`;
+      document.getElementById('camera-controls').style.transform = `scale(${newSize})`;
+      document.getElementById('controls').style.transform = `scale(${newSize})`;
+      document.getElementById('UISize-value').textContent = newSize;
+    }
     const instructions = document.getElementById('instructions');
 
     function showInstructions() {
-      instructions.style.display = 'block';
+      instructions.classList.add('show');
     }
 
     function closeInstructions() {
-      instructions.style.display = 'none';
+      instructions.classList.remove('show');
     }
     const startSound = document.getElementById('startSound');
     const volumeSlider = document.getElementById('volume-slider');
@@ -811,20 +827,25 @@ const initializeSocket = () => {
       toggleMusicCheckbox.checked ? startSound.play() : startSound.pause();
     };
     const settingsModal = document.getElementById('settings-modal');
+    const modalContent = document.getElementById('modal-content');
     const settingsBtn = document.getElementById('settings-btn');
     const openSettings = () => {
-      settingsModal.style.display = 'flex';
+      settingsModal.style.display = "flex";
+      setTimeout(() => {
+        modalContent.classList.add('show');
+      }, 10);
     };
     const closeSettings = () => {
-      settingsModal.style.display = 'none';
+      setTimeout(() => {
+        settingsModal.style.display = "none";
+      }, 290);
+      modalContent.classList.remove('show');
     };
     window.onclick = function(event) {
       if (event.target === settingsModal) {
         closeSettings();
-      } else if (event.target == document.getElementById('privacy-policy-modal')) {
-        closePrivacyPolicy();
-      } else if (event.target == document.getElementById('terms-of-service-modal')) {
-        closeTermsOfService();
+      } else if (event.target == document.getElementById('privacy-policy-modal') || event.target == document.getElementById('terms-of-service-modal')) {
+        closePrivacyPolicyAndTerms();
       }
     };
     renderer.shadowMap.enabled = true;
@@ -837,7 +858,10 @@ const initializeSocket = () => {
       scene.remove(sky);
       if (input.startsWith('http')) {
         skyTexture = textureLoader.load(input);
-        skyMaterial = new THREE.MeshBasicMaterial({map: skyTexture, side: THREE.BackSide});
+        skyMaterial = new THREE.MeshBasicMaterial({
+          map: skyTexture,
+          side: THREE.BackSide
+        });
         sky = new THREE.Mesh(skyGeometry, skyMaterial);
         scene.add(sky);
         sky.position.y = 100;
@@ -858,11 +882,11 @@ const initializeSocket = () => {
     changeSkyBackground("https://cdn.pixabay.com/photo/2020/07/22/15/03/field-5429112_960_720.jpg");
 
     function spawnScreen() {
-      toggleSpawnScreen = document.getElementById('spawn-screen');
-      if (toggleSpawnScreen.style.display !== "none") {
-        toggleSpawnScreen.style.display = "none";
+      spawnScreenToggle = document.getElementById('spawn-screen');
+      if (spawnScreenToggle.style.display !== "flex") {
+        spawnScreenToggle.style.display = "flex";
       } else {
-        toggleSpawnScreen.style.display = "flex";
+        spawnScreenToggle.style.display = "none";
       }
     }
 
@@ -926,11 +950,14 @@ const initializeSocket = () => {
     loadingLoadScreen = true;
     window.onload = function() {
       setTimeout(function() {
+        const h1LoadingScreen = document.getElementById('h1LoadingScreen');
+        h1LoadingScreen.style.animation = 'slideOut 0.5s ease forwards';
+        setTimeout(function() {
+          h1LoadingScreen.style.display = 'none';
+          loadingLoadScreen = false;
+        }, 500);
         document.getElementById('closeLoadingScreenBtn').style.display = 'block';
-        document.getElementById('h1LoadingScreen').style.display = 'none';
-        document.getElementById('loader').style.display = 'none';
-        loadingLoadScreen = false;
-      }, 500);
+      }, 1000);
     };
 
     function closeLoadingScreen() {
@@ -940,7 +967,6 @@ const initializeSocket = () => {
         updateVolume();
         showInstructions();
         isPaused = false;
-        initializeSocket();
       }
     }
     const raycaster = new THREE.Raycaster();
@@ -1410,7 +1436,13 @@ const initializeSocket = () => {
       messageElement.classList.add('message');
       messageContainer.appendChild(messageElement);
       setTimeout(() => {
-        messageContainer.removeChild(messageElement);
+        messageElement.classList.add('show');
+      }, 100);
+      setTimeout(() => {
+        messageElement.classList.remove('show');
+        setTimeout(() => {
+          messageContainer.removeChild(messageElement);
+        }, 500);
       }, 3000);
     };
     const randomMessages = [
