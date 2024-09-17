@@ -74,7 +74,8 @@ body {
   position: fixed;
   top: 45%;
   transform: translateX(100vw);
-  animation: slideIn 0.5s forwards ease, scaleAnimation 2s forwards ease infinite 0.5s;
+  animation: slideIn 0.5s forwards ease,
+    scaleAnimation 2s forwards ease infinite 0.5s;
 }
 
 @keyframes scaleAnimation {
@@ -89,7 +90,7 @@ body {
 
 @keyframes slideIn {
   to {
-     transform: translateX(0);
+    transform: translateX(0);
   }
 }
 
@@ -430,7 +431,6 @@ body {
   align-items: center;
   margin-top: 10px;
 }
-
 
 input[type="checkbox"] {
   appearance: none;
@@ -842,8 +842,6 @@ select::after {
   border-radius: 10px;
 }
 
-
-
 .background-controls button,
 .background-controls input,
 .background-controls img {
@@ -860,7 +858,6 @@ select::after {
 .background-controls img {
   width: 101%;
   height: 101%;
-  
 }
 .background-controls input {
   width: 65px;
@@ -874,8 +871,8 @@ select::after {
   overflow: hidden;
 }
 
-
-.background-controls button:active { opacity: 0.7;
+.background-controls button:active {
+  opacity: 0.7;
 }
 
 .selected-sky,
@@ -908,4 +905,3 @@ select::after {
   margin-top: 0px;
   line-height: 0px;
 }
-  
