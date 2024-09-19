@@ -1,18 +1,32 @@
+let rotationSpeed = 0.01;
 const updateRotationSpeed = () => {
   const rotationSpeedSlider = document.getElementById("rotation-speed-slider");
   const rotationValue = document.getElementById("rotation-speed-value");
+
   rotationSpeed = parseFloat(rotationSpeedSlider.value);
   rotationValue.textContent = rotationSpeed
     .toFixed(3)
     .replace(/^0\.0/, "0.")
     .replace(/^0./, "");
 };
+
+let force = 2;
 const updateForce = () => {
   const forceSlider = document.getElementById("force-slider");
   const forceValueElement = document.getElementById("force-value");
+
   force = parseFloat(forceSlider.value);
   forceValueElement.textContent = force;
 };
+
+const availableLanguages = [
+  { code: "en", name: "English" },
+  { code: "ua", name: "Українська" },
+  { code: "ru", name: "Русский" },
+  { code: "pl", name: "Polski" },
+  { code: "es", name: "Español" },
+  { code: "de", name: "Deutsch" }
+];
 function populateLanguageSelects() {
   const selectElements = [
     document.getElementById("language-select"),
@@ -30,6 +44,7 @@ function populateLanguageSelects() {
 document.addEventListener("DOMContentLoaded", (event) => {
   populateLanguageSelects();
 });
+
 const languageTexts = {
   en: {
     termsText:
