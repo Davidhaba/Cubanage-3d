@@ -91,7 +91,6 @@ const languageTexts = {
     rotateMapToggle: "Rotate map:",
     mapSizeText: "Map size:",
     h2KeyBindings: "Key Bindings",
-    h2OpenSettingsBindings: "Edit keys",
     h2mobilePc: "Mobile & PC",
     keyboardOrButtonsLabel: "Buttons on the screen:",
     rotationSelectLabel: "Rotation:",
@@ -144,7 +143,6 @@ const languageTexts = {
     rotateMapToggle: "Обертати карту:",
     mapSizeText: "Розмір карти:",
     h2KeyBindings: "Призначення клавіш",
-    h2OpenSettingsBindings: "Редагувати клавіші",
     h2mobilePc: "Мобільний телефон та ПК",
     keyboardOrButtonsLabel: "Кнопки на екрані:",
     rotationSelectLabel: "Орієнтація:",
@@ -197,7 +195,6 @@ const languageTexts = {
     rotateMapToggle: "Вращать карту:",
     mapSizeText: "Размер карты:",
     h2KeyBindings: "Назначение клавиш",
-    h2OpenSettingsBindings: "Изменить клавиши",
     h2mobilePc: "Мобильный телефон и ПК",
     keyboardOrButtonsLabel: "Кнопки на экране:",
     rotationSelectLabel: "Ориентация:",
@@ -250,7 +247,6 @@ const languageTexts = {
     rotateMapToggle: "Obracaj mapę:",
     mapSizeText: "Rozmiar mapy:",
     h2KeyBindings: "Przypisania klawiszy",
-    h2OpenSettingsBindings: "Edytuj klawisze",
     h2mobilePc: "Mobilny telefon i PC",
     keyboardOrButtonsLabel: "Przyciski na ekranie:",
     rotationSelectLabel: "Rotacja:",
@@ -305,7 +301,6 @@ const languageTexts = {
     rotateMapToggle: "Karte drehen:",
     mapSizeText: "Karten Größe:",
     h2KeyBindings: "Tastenzuordnungen",
-    h2OpenSettingsBindings: "Tasten bearbeiten",
     h2mobilePc: "Mobil & PC",
     keyboardOrButtonsLabel: "Tasten auf dem Bildschirm:",
     rotationSelectLabel: "Rotation:",
@@ -359,7 +354,6 @@ const languageTexts = {
     rotateMapToggle: "Rotar mapa:",
     mapSizeText: "Tamaño del mapa:",
     h2KeyBindings: "Asignación de teclas",
-    h2OpenSettingsBindings: "Editar teclas",
     h2mobilePc: "Móvil y PC",
     keyboardOrButtonsLabel: "Botones en la pantalla:",
     rotationSelectLabel: "Rotación:",
@@ -387,6 +381,7 @@ const changeLanguage = (sourceElement) => {
       texts.continueButtonText;
   }
   document.getElementById("h6LoadingScreen").innerHTML = texts.h6LoadingScreen;
+
   document.getElementById("instructions-btn").textContent = texts.instructions;
   document.getElementById("musicTextSettings").textContent = texts.music;
   document.getElementById("fog-checkbox").previousElementSibling.textContent =
@@ -436,9 +431,9 @@ const changeLanguage = (sourceElement) => {
   document.getElementById("rotateMapToggle").textContent =
     texts.rotateMapToggle;
   document.getElementById("mapSize-text").textContent = texts.mapSizeText;
-  document.getElementById("h2-keyBindings").textContent = texts.h2KeyBindings;
+  document.getElementById("h3-keyBindings").textContent = texts.h2KeyBindings;
   document.getElementById("open-settingsBindings-btn").textContent =
-    texts.h2OpenSettingsBindings;
+    texts.h2KeyBindings;
   document.getElementById("h2-mobile&pc").textContent = texts.h2mobilePc;
   document.getElementById("keyboardOrButtonsLabel").textContent =
     texts.keyboardOrButtonsLabel;
