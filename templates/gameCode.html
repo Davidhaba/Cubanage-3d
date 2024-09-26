@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -44,7 +44,7 @@
   </div>
 
   <div id="privacy-policy-modal" class="modalTextsRules">
-    <div class="modalTextsRules-content">
+    <div class="modalTextsRules-content scrollable">
       <span class="close" onclick="closePrivacyPolicyAndTerms()">&times;</span>
       <h2>Privacy Policy</h2>
       <p>Last updated: 7.08.2024</p>
@@ -71,7 +71,7 @@
   </div>
 
   <div id="terms-of-service-modal" class="modalTextsRules">
-    <div class="modalTextsRules-content">
+    <div class="modalTextsRules-content scrollable">
       <span class="close" onclick="closePrivacyPolicyAndTerms()">&times;</span>
       <h2>Terms of Service</h2>
       <p>Last updated: 7.08.2024</p>
@@ -156,7 +156,7 @@
   </div>
 
   <div id="spawn-screen">
-    <div>
+    <div class="scrollable" id="spawn-screen-modal">
       <h2 id="h2-spawn-screen">What do you want to spawn?</h2>
       <div style="display: flex; margin-top: 25px;">
         <button class="control-button" id="cube-spawn-button" onclick="spawnCube()">Cube</button>
@@ -174,7 +174,7 @@
   <div id="coordinates">X: 0, Y: 0, Z: 0</div>
 
   <div id="settings-modal">
-    <div id="modal-content">
+    <div class="scrollable" id="modal-content">
       <span class="close" onclick="closeSettings()">&times;</span>
 
       <div id="sound-settings">
@@ -294,9 +294,6 @@
         </div>
       </div>
 
-      <h2 id="h2-keyBindings"><br>Key Bindings</h2>
-      <button class="control-button" id="open-settingsBindings-btn">Edit keys</button>
-
       <h2 id="h2-mobile&pc"><br>Mobile & PC</h2>
       <div id="toggleKeyboardCheckbox" style="margin-bottom: 10px;">
         <label id="keyboardOrButtonsLabel" for="keyboardInputToggle">Buttons on the screen:</label>
@@ -309,6 +306,7 @@
         <option id="horizontalRotationOption" value="horizontal">Horizontal</option>
         <option id="reverseHorizontalRotationOption" value="reverseHorizontal">Reverse Horizontal</option>
       </select>
+      <button class="control-button" id="open-settingsBindings-btn">Key Bindings</button>
 
       <h2 id="h2-language"><br>Language</h2>
       <div id="language-settings">
@@ -335,48 +333,54 @@
 
   <div id="settingsBindings-menu">
     <button id="close-settingsBindings-btn">X</button>
-    <h3>Key Bindings</h3>
+    <h3 id="h3-keyBindings">Key Bindings</h3>
     <div>
-      <label for="key-pause">Pause:</label>
-      <input id="key-pause" type="text" value="p" readonly>
+      <div>
+        <label for="key-pause">Pause:</label>
+        <input id="key-pause" type="text" value="p" readonly>
+      </div>
     </div>
     <h2>Move Camera</h2>
     <div>
-      <label for="key-upCamera">Move Camera Up:</label>
-      <input id="key-upCamera" type="text" value="w" readonly>
-    </div>
-    <div>
-      <label for="key-downCamera">Move Camera Down:</label>
-      <input id="key-downCamera" type="text" value="s" readonly>
-    </div>
-    <div>
-      <label for="key-leftCamera">Move Camera Left:</label>
-      <input id="key-leftCamera" type="text" value="a" readonly>
-    </div>
-    <div>
-      <label for="key-rightCamera">Move Camera Right:</label>
-      <input id="key-rightCamera" type="text" value="d" readonly>
+      <div>
+        <label for="key-upCamera">Move Camera Up:</label>
+        <input id="key-upCamera" type="text" value="w" readonly>
+      </div>
+      <div>
+        <label for="key-downCamera">Move Camera Down:</label>
+        <input id="key-downCamera" type="text" value="s" readonly>
+      </div>
+      <div>
+        <label for="key-leftCamera">Move Camera Left:</label>
+        <input id="key-leftCamera" type="text" value="a" readonly>
+      </div>
+      <div>
+        <label for="key-rightCamera">Move Camera Right:</label>
+        <input id="key-rightCamera" type="text" value="d" readonly>
+      </div>
     </div>
     <h2>Move Cube</h2>
     <div>
-      <label for="key-upCube">Move Cube Up:</label>
-      <input id="key-upCube" type="text" value="Shift" readonly>
-    </div>
-    <div>
-      <label for="key-forwardCube">Move Cube Forward:</label>
-      <input id="key-forwardCube" type="text" value="ArrowUp" readonly>
-    </div>
-    <div>
-      <label for="key-backCube">Move Cube Back:</label>
-      <input id="key-backCube" type="text" value="ArrowDown" readonly>
-    </div>
-    <div>
-      <label for="key-leftCube">Move Cube Left:</label>
-      <input id="key-leftCube" type="text" value="ArrowLeft" readonly>
-    </div>
-    <div>
-      <label for="key-rightCube">Move Cube Right:</label>
-      <input id="key-rightCube" type="text" value="ArrowRight" readonly>
+      <div>
+        <label for="key-upCube">Move Cube Up:</label>
+        <input id="key-upCube" type="text" value="Shift" readonly>
+      </div>
+      <div>
+        <label for="key-forwardCube">Move Cube Forward:</label>
+        <input id="key-forwardCube" type="text" value="ArrowUp" readonly>
+      </div>
+      <div>
+        <label for="key-backCube">Move Cube Back:</label>
+        <input id="key-backCube" type="text" value="ArrowDown" readonly>
+      </div>
+      <div>
+        <label for="key-leftCube">Move Cube Left:</label>
+        <input id="key-leftCube" type="text" value="ArrowLeft" readonly>
+      </div>
+      <div>
+        <label for="key-rightCube">Move Cube Right:</label>
+        <input id="key-rightCube" type="text" value="ArrowRight" readonly>
+      </div>
     </div>
 
   </div>
@@ -386,28 +390,36 @@
   <script>
     const modalTextsRulesContent = document.querySelectorAll(".modalTextsRules-content");
     function openPrivacyPolicy() {
-      document.getElementById('privacy-policy-modal').style.display = 'flex';
+      const privacyModal = document.getElementById('privacy-policy-modal');
+      privacyModal.style.display = 'flex';
       setTimeout(() => {
+        privacyModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
         modalTextsRulesContent.forEach(element => {
           element.classList.add('show');
         });
       }, 10);
     }
     function openTermsOfService() {
-      document.getElementById('terms-of-service-modal').style.display = 'flex';
+      const termsModal = document.getElementById('terms-of-service-modal');
+      termsModal.style.display = 'flex';
       setTimeout(() => {
+        termsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
         modalTextsRulesContent.forEach(element => {
           element.classList.add('show');
         });
       }, 10);
     }
     function closePrivacyPolicyAndTerms() {
+      const privacyModal = document.getElementById('privacy-policy-modal');
+      const termsModal = document.getElementById('terms-of-service-modal');
+      privacyModal.style.backgroundColor = 'transparent';
+      termsModal.style.backgroundColor = 'transparent';
       modalTextsRulesContent.forEach(element => {
         element.classList.remove('show');
       });
       setTimeout(() => {
-         document.getElementById('privacy-policy-modal').style.display = 'none';
-         document.getElementById('terms-of-service-modal').style.display = 'none';
+        privacyModal.style.display = 'none';
+        termsModal.style.display = 'none';
       }, 290);
     }
   </script>
@@ -745,7 +757,7 @@
 
   <script>
     document.getElementById('open-settingsBindings-btn').addEventListener('click', () => {
-      document.getElementById('settingsBindings-menu').style.display = 'block';
+      document.getElementById('settingsBindings-menu').style.display = 'flex';
     });
     document.getElementById('close-settingsBindings-btn').addEventListener('click', () => {
       document.getElementById('settingsBindings-menu').style.display = 'none';
@@ -802,10 +814,16 @@
     const instructions = document.getElementById('instructions');
 
 function showInstructions() {
-  instructions.classList.add('show');
+  instructions.style.display = "block";
+      setTimeout(() => {
+        instructions.classList.add('show');
+      }, 10);
 }
 function closeInstructions() {
-  instructions.classList.remove('show');
+  setTimeout(() => {
+        instructions.style.display = "none";
+      }, 290);
+      instructions.classList.remove('show');
 }
 
     const startSound = document.getElementById('startSound');
@@ -816,6 +834,7 @@ function closeInstructions() {
       const volume = parseFloat(volumeSlider.value);
       startSound.volume = volume;
       document.getElementById('textVolumeForVolume').textContent = Math.round(volume * 100) + '%';
+      navigator.vibrate(10);
       if (volume === 0 && toggleMusicCheckbox) {
         startSound.pause();
         toggleMusicCheckbox.checked = false;
@@ -826,14 +845,89 @@ function closeInstructions() {
     };
     const toggleMusic = () => {
       toggleMusicCheckbox.checked ? startSound.play() : startSound.pause();
+      navigator.vibrate(30);
     };
     const settingsModal = document.getElementById('settings-modal');
     const modalContent = document.getElementById('modal-content');
     const settingsBtn = document.getElementById('settings-btn');
+    
+    let isAtBoundary = false;
+    let startTouchY = 0;
+    let currentScale = 1;
+    let originalTransform = '';
+
+document.addEventListener('touchstart', (event) => {
+  
+  const target = event.target.closest('.scrollable');
+  
+  if (target) {
+    const scrollTop = target.scrollTop;
+    const maxScrollHeight = target.scrollHeight;
+    if (scrollTop <= 0 || scrollTop + target.clientHeight >= maxScrollHeight - 1) {
+      isAtBoundary = true;
+      startTouchY = event.touches[0].clientY;
+    }
+  }
+});
+
+document.addEventListener('touchmove', (event) => {
+  if (isAtBoundary) {
+    let targetClass = event.target;
+  while (targetClass && !targetClass.classList.contains('show')) {
+    targetClass = targetClass.parentElement;
+  }
+  if (targetClass) {
+    const transformValue = getComputedStyle(targetClass).transform;
+
+    if (transformValue && transformValue !== 'none') {
+      const matrixValues = transformValue.match(/matrix\(([^)]+)\)/);
+      let translateX = 0, translateY = 0, scaleX = 1, scaleY = 1;
+
+      if (matrixValues) {
+        const values = matrixValues[1].split(',').map(parseFloat);
+        scaleX = values[0];
+        scaleY = values[3];
+        translateX = values[4];
+        translateY = values[5];
+      }
+      const originalTransform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+    }
+  }
+    const target = event.target.closest('.scrollable');
+    
+    if (target) {
+      const touchY = event.touches[0].clientY;
+      const deltaY = startTouchY - touchY;
+      const scrollTop = target.scrollTop;
+      const maxScrollHeight = target.scrollHeight;
+      if (scrollTop <= 0 && deltaY < 0) {
+        currentScale = Math.max(1, Math.min(1 + Math.abs(deltaY) / 900, 1.07));
+        target.style.transform = `scaleY(${currentScale})`;
+      }
+      if (scrollTop + target.clientHeight >= maxScrollHeight - 1 && deltaY > 0) {
+        currentScale = Math.max(1, Math.min(1 + Math.abs(deltaY) / 900, 1.07));
+        target.style.transform = `scaleY(${currentScale})`;
+      }
+    }
+  }
+});
+
+document.addEventListener('touchend', (event) => {
+  if (isAtBoundary) {
+    const target = event.target.closest('.scrollable');
+    
+    if (target) {
+      target.style.transform = `${originalTransform}`;
+      isAtBoundary = false;
+    }
+  }
+});
+
     const openSettings = () => {
       settingsModal.style.display = "flex";
       setTimeout(() => {
         modalContent.classList.add('show');
+        settingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
       }, 10);
     };
     const closeSettings = () => {
@@ -841,10 +935,13 @@ function closeInstructions() {
         settingsModal.style.display = "none";
       }, 290);
       modalContent.classList.remove('show');
+      settingsModal.style.backgroundColor = 'transparent';
     };
     window.onclick = function(event) {
       if (event.target === settingsModal) {
         closeSettings();
+      } else if (event.target == document.getElementById('spawn-screen')) {
+        spawnScreen();
       } else if (event.target == document.getElementById('privacy-policy-modal') || event.target == document.getElementById('terms-of-service-modal')) {
         closePrivacyPolicyAndTerms();
       }
@@ -882,10 +979,19 @@ function closeInstructions() {
 
     function spawnScreen() {
       spawnScreenToggle = document.getElementById('spawn-screen');
+      const spawnScreenModal = document.getElementById('spawn-screen-modal');
       if (spawnScreenToggle.style.display !== "flex") {
         spawnScreenToggle.style.display = "flex";
+        setTimeout(() => {
+          spawnScreenModal.classList.add('show');
+          spawnScreenToggle.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        }, 10);
       } else {
-        spawnScreenToggle.style.display = "none";
+        setTimeout(() => {
+          spawnScreenToggle.style.display = "none";
+        }, 290);
+        spawnScreenModal.classList.remove('show');
+        spawnScreenToggle.style.backgroundColor = 'transparent';
       }
     }
 
@@ -895,9 +1001,10 @@ function closeInstructions() {
       const checkboxChecked = document.getElementById("checkboxAnimationSpawn").checked
       const updatedText = getTranslatedTextSpawn("spawnCameraText");
       document.getElementById("spawnNotAvailable").innerHTML = updatedText;
+      navigator.vibrate(20);
       if (checkboxChecked) {
         const startCamera = camera.position.clone();
-        const targetCamera = new THREE.Vector3(0, 0, 10);
+        const targetCamera = new THREE.Vector3(0, 0, 0);
         const tweenCamera = new TWEEN.Tween(startCamera)
           .to(targetCamera, 1000)
           .easing(TWEEN.Easing.Quadratic.Out)
@@ -907,7 +1014,7 @@ function closeInstructions() {
           })
           .start();
       } else {
-        camera.position.set(0, 0, 10);
+        camera.position.set(0, 0, 0);
         camera.lookAt(cube.position);
       }
     }
@@ -925,6 +1032,7 @@ function closeInstructions() {
       const updatedText = getTranslatedTextSpawn("spawnCubeText");
       document.getElementById("spawnNotAvailable").innerHTML = updatedText;
       gravity = 0.003;
+      navigator.vibrate(20);
       if (checkboxChecked) {
         const start = cube.position.clone();
         const target = start.clone();
@@ -1210,15 +1318,13 @@ function closeInstructions() {
         stopMovingCamera();
       }
     });
-    const updateKeyBinding = (action, newKey) => {
-      keyBindings[action] = newKey;
-    };
     const setupKeyInput = (inputId, action) => {
       const inputElement = document.getElementById(inputId);
       inputElement.addEventListener('keydown', (event) => {
         const newKey = event.key;
         inputElement.value = newKey;
-        updateKeyBinding(action, newKey);
+        inputElement.blur();
+        keyBindings[action] = newKey;
       });
     };
     setupKeyInput('key-upCamera', 'upCamera');
@@ -1420,6 +1526,7 @@ function closeInstructions() {
     };
     const updateScore = () => {
       collectedStars++;
+      navigator.vibrate(20);
       if (collectedStars === totalStars) {
         totalStars += 10;
         createStars();
