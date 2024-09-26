@@ -2,7 +2,6 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  user-select: none;
   background-color: black;
 }
 
@@ -131,7 +130,7 @@ body {
   color: #2d2dff;
   cursor: pointer;
   font-weight: bold;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
 }
 #terms-text a:hover {
   color: #0000c3;
@@ -142,10 +141,10 @@ body {
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   user-select: text;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
 .modalTextsRules-content {
@@ -158,8 +157,8 @@ body {
   overflow-y: scroll;
   overflow-x: visible;
   opacity: 0;
-  transform: scale(0);
-  transition: all 0.3s ease;
+  transform: translateX(5%);
+  transition: all 0.2s ease;
 }
 
 .modalTextsRules-content h3,
@@ -168,33 +167,6 @@ body {
   margin-bottom: -5px;
 }
 
-.close {
-  position: fixed;
-  top: 20px;
-  cursor: pointer;
-  height: 30px;
-  width: 30px;
-  line-height: 30px;
-  background-color: white;
-  text-align: center;
-  font-size: 40px;
-  border-radius: 5px;
-  z-index: 3;
-  float: right;
-  font-weight: bold;
-  user-select: none;
-  transition: all 0.2s ease;
-}
-
-.close:hover,
-.close:focus {
-  background-color: grey;
-  text-decoration: none;
-  cursor: pointer;
-}
-.close:active {
-  transform: scale(0.8);
-}
 #controls {
   position: absolute;
   bottom: 100px;
@@ -218,8 +190,9 @@ body {
   align-items: center;
   justify-content: center;
   border: 1px solid blue;
+  user-select: none;
   background-color: rgba(0, 0, 255, 0.5);
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 .control-button img {
   user-select: none;
@@ -244,7 +217,7 @@ body {
   border-radius: 50%;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
+  transition: all 0.2s ease;
   transform: scale(0);
   z-index: 0;
 }
@@ -390,21 +363,35 @@ body {
   width: 100%;
   height: 100%;
   color: white;
-  background-color: rgba(0, 0, 0, 0.8);
   z-index: 5;
   overflow: hidden;
-  flex-direction: column;
-  text-align: center;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
-#spawn-screen > div {
+#spawn-screen-modal {
   display: flex;
+  background-color: black;
+  background-image: 
+    radial-gradient(circle at 25% 25%, #00005f, 30%, transparent 45%),
+    radial-gradient(circle at 75% 75%, #00005f, 30%, transparent 45%);
+  width: 90%;
+  max-width: 400px;
   flex-direction: column;
-  align-items: center;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid blue;
+  opacity: 0;
+  transform: translateX(5%);
+  transition: all 0.2s ease;
 }
 
+#spawn-screen div {
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
 #cancel-spawn-button {
   margin-top: 35px;
   background-color: rgba(255, 0, 0, 0.6);
@@ -429,7 +416,7 @@ body {
 }
 
 #h2-spawn-screen {
-  margin-top: -50px;
+  margin-bottom: 50px;
 }
 
 #spawnNotAvailable {
@@ -542,33 +529,62 @@ input[type="checkbox"]:active::before {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
   justify-content: center;
   z-index: 6;
+  transition: all 0.2s ease;
 }
 
 #modal-content.show,
+#spawn-screen-modal.show,
 .modalTextsRules-content.show {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0);
 }
 
 #modal-content {
   background-color: #fefefe;
   padding: 20px;
-  border: 2px solid #888;
+  border: 2px solid blue;
   border-radius: 8px;
   overflow-y: scroll;
   overflow-x: visible;
   width: 450px;
   margin: 20px;
   opacity: 0;
-  transform: scale(0);
-  transition: all 0.3s ease;
+  transform: translateX(5%);
+  transition: all 0.2s ease;
 }
 
 #modal-content label {
   white-space: nowrap;
+}
+
+.close {
+  position: fixed;
+  top: 20px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  background-color: white;
+  text-align: center;
+  font-size: 40px;
+  border-radius: 5px;
+  z-index: 3;
+  float: right;
+  font-weight: bold;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.close:hover,
+.close:focus {
+  background-color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+.close:active {
+  transform: scale(0.8);
 }
 
 #toggleMusicCheckbox,
@@ -597,7 +613,9 @@ input[type="checkbox"]:active::before {
   flex-direction: column;
   gap: 5px;
 }
-
+#open-settingsBindings-btn {
+  margin-top: 10px;
+}
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
@@ -607,7 +625,7 @@ input[type="range"] {
   outline: none;
   opacity: 0.7;
   -webkit-transition: 0.1s;
-  transition: opacity 0.1s;
+  transition: all 0.2s ease;
 }
 
 input[type="range"]:active,
@@ -618,7 +636,7 @@ input[type="range"]:hover {
 input[type="range"]::-webkit-slider-runnable-track:hover {
   background: #a3b6ff;
   border-radius: 10px;
-  transition: background 0.5s, transform 0.5s;
+  transition: all 0.5s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -628,7 +646,7 @@ input[type="range"]::-webkit-slider-thumb {
   background: blue;
   border-radius: 50%;
   cursor: pointer;
-  margin-top: 0px;
+  transition: all 0.2s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:active,
@@ -668,9 +686,9 @@ input[type="range"]::-moz-range-thumb:focus {
   left: 50%;
   width: 80%;
   max-width: 500px;
-  transform: translate(-50%, -50%) scale(0);
+  transform: translate(-45%, -50%);
   text-align: center;
-  display: block;
+  display: none;
   opacity: 0;
   background-color: rgba(0, 0, 20, 0.6);
   backdrop-filter: blur(5px);
@@ -679,12 +697,12 @@ input[type="range"]::-moz-range-thumb:focus {
   border: 1px blue solid;
   padding: 20px;
   z-index: 7;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 #instructions.show {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%);
 }
 
 #instructions h1 {
@@ -755,54 +773,62 @@ input[type="range"]::-moz-range-thumb:focus {
 }
 
 #close-settingsBindings-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
-  background-color: #ff4d4d;
+  position: fixed;
+  top: 20px;
+  right: 5%;
+  width: 35px;
+  height: 35px;
+  background-color: #fe3333;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1.2em;
+  transition: all 0.2s ease;
 }
 #close-settingsBindings-btn:hover {
   background-color: #cc0000;
+  border-radius: 10px;
 }
 #settingsBindings-menu {
   display: none;
   position: absolute;
-  width: 95%;
-  height: 94%;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 20px;
+  width: 100vw;
+  height: 100vh;
   background-color: #333;
   color: #fff;
   z-index: 10;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
 }
 #settingsBindings-menu h3 {
-  margin-top: 0;
   font-size: 1.9em;
-  text-align: center;
 }
 #settingsBindings-menu div {
   margin-bottom: 10px;
+}
+#settingsBindings-menu > div {
+  display: flex;
+  margin-bottom: 0;
+  align-items: flex-end;
+  flex-direction: column;
 }
 #settingsBindings-menu label {
   margin-bottom: 5px;
   font-size: 1em;
 }
 #settingsBindings-menu input[type="text"] {
-  width: 60px;
+  width: 80px;
+  height: 20px;
   padding: 5px;
   font-size: 1em;
   border: 1px solid #555;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #fff;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #ffffffeb;
   text-align: center;
 }
 #settingsBindings-menu input[type="text"]:focus {
@@ -819,7 +845,7 @@ select {
   color: #3498db;
   cursor: pointer;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
 }
 select:hover {
   border-color: #2980b9;
@@ -856,8 +882,6 @@ select::after {
   border-radius: 10px;
 }
 
-
-
 .background-controls button,
 .background-controls input,
 .background-controls img {
@@ -887,7 +911,6 @@ select::after {
   border: 1px solid blue;
   overflow: hidden;
 }
-
 
 .background-controls button:active { opacity: 0.7;
 }
