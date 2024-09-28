@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /cubanage-3d-p3ut
+
+User-agent: *
+Allow: /
+
+Sitemap: https://cubanage-3d-8gd0.onrender.com/sitemap.xml
