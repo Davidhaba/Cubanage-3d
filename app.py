@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory, abort
+from flask import Flask, render_template, request, send_from_directory
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import logging
 import os
@@ -21,7 +21,7 @@ def serve_file(filename):
     if os.path.exists(file_path):
         return send_from_directory('checkVerifications', filename)
     else:
-        abort(404)
+        return "No found"
 
 @socketio.on('connect')
 def handle_connect():
