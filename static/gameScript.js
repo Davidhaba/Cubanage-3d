@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 const languageTexts = {
   en: {
     termsText:
-      "By continuing, you agree to our <a href='#' onclick='openPrivacyPolicy()'>Privacy Policy</a> and <a href='#' onclick='openTermsOfService()'>Terms of Service</a>.",
+      "By continuing, you agree to our <a onclick='openPrivacyPolicy()'>Privacy Policy</a> and <a onclick='openTermsOfService()'>Terms of Service</a>.",
     instructions: "Instructions",
     h6LoadingScreen:
       "Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends, as this game is hosted on a server along with other players.<br>Enjoy the game🔥",
@@ -98,11 +98,26 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Reverse Horizontal",
     verticalRotationOption: "Vertical",
     reverseVerticalRotationOption: "Reverse Vertical",
-    playerCountLabel: "Players:",
+    UIControlSizeSpan: "UI controls Size:",
+    colorSchemeLabel: "Color Scheme:",
+    colorSchemeOptions: {
+      light: "Light",
+      dark: "Dark",
+      blue: "Blue",
+      green: "Green",
+      yellow: "Yellow",
+      pink: "Pink",
+      red: "Red",
+      orange: "Orange",
+      purple: "Purple",
+      brown: "Brown",
+    },
+    colorSchemeLabelLoading: "Select your favorite color:",
+    colorSchemeInfoLoading: "This color will be used for personalization",
   },
   ua: {
     termsText:
-      "Продовжуючи, ви погоджуєтеся з нашою <a href='#' onclick='openPrivacyPolicy()'>Політикою конфіденційності</a> та <a href='#' onclick='openTermsOfService()'>Умовами обслуговування.</a>.",
+      "Продовжуючи, ви погоджуєтеся з нашою <a onclick='openPrivacyPolicy()'>Політикою конфіденційності</a> та <a onclick='openTermsOfService()'>Умовами обслуговування.</a>.",
     instructions: "Інструкція",
     h6LoadingScreen:
       "Cubanage 3D — це гра про керування кубом і збір фігур. Розважайтеся з друзями, оскільки ця гра розміщена на сервері разом з іншими гравцями.<br>Приємної гри🔥",
@@ -150,11 +165,26 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Зворотна горизонтальна",
     verticalRotationOption: "Вертикальна",
     reverseVerticalRotationOption: "Зворотна вертикальна",
-    playerCountLabel: "Гравці:",
+    UIControlSizeSpan: "Розмір елементів керування:",
+    colorSchemeLabel: "Кольорова схема:",
+    colorSchemeOptions: {
+      light: "Світла",
+      dark: "Темна",
+      blue: "Синя",
+      green: "Зелена",
+      yellow: "Жовта",
+      pink: "Рожева",
+      red: "Червона",
+      orange: "Помаранчева",
+      purple: "Фіолетова",
+      brown: "Коричнева",
+    },
+    colorSchemeLabelLoading: "Виберіть свій улюблений колір:",
+    colorSchemeInfoLoading: "Цей колір буде використано для персоналізації",
   },
   ru: {
     termsText:
-      "Продолжая, вы соглашаетесь с нашей <a href='#' onclick='openPrivacyPolicy()'>Политикой конфиденциальности</a> и <a href='#' onclick='openTermsOfService()'>Условиями использования</a>.",
+      "Продолжая, вы соглашаетесь с нашей <a onclick='openPrivacyPolicy()'>Политикой конфиденциальности</a> и <a onclick='openTermsOfService()'>Условиями использования</a>.",
     instructions: "Инструкции",
     h6LoadingScreen:
       "Cubanage 3D — это игра про управление кубом и сбор фигур. Развлекайтесь с друзьями, так как эта игра размещена на сервере вместе с другими игроками.<br>Приятной игры🔥",
@@ -202,11 +232,26 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Обратная горизонтальная",
     verticalRotationOption: "Вертикальная",
     reverseVerticalRotationOption: "Обратная вертикальная",
-    playerCountLabel: "Игроки:",
+    UIControlSizeSpan: "Размер элементов управления:",
+    colorSchemeLabel: "Цветовая схема:",
+    colorSchemeOptions: {
+      light: "Светлая",
+      dark: "Тёмная",
+      blue: "Синяя",
+      green: "Зелёная",
+      yellow: "Жёлтая",
+      pink: "Розовая",
+      red: "Красная",
+      orange: "Оранжевая",
+      purple: "Фиолетовая",
+      brown: "Коричневая",
+    },
+    colorSchemeLabelLoading: "Выберите ваш любимый цвет:",
+    colorSchemeInfoLoading: "Этот цвет будет использован для персонализации",
   },
   pl: {
     termsText:
-      "Kontynuując, zgadzasz się z naszą <a href='#' onclick='openPrivacyPolicy()'>Polityką prywatności</a> i <a href='#' onclick='openTermsOfService()'>Regulaminem</a>.",
+      "Kontynuując, zgadzasz się z naszą <a onclick='openPrivacyPolicy()'>Polityką prywatności</a> i <a onclick='openTermsOfService()'>Regulaminem</a>.",
     instructions: "Instrukcje",
     h6LoadingScreen:
       "Cubanage 3D es un juego sobre controlar un cubo y recolectar formas. Diviértete con amigos, ya que este juego está alojado en un servidor junto con otros jugadores.<br>¡Disfruta del juego!🔥",
@@ -254,11 +299,26 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Odwrotna horyzontalna",
     verticalRotationOption: "Wertykalna",
     reverseVerticalRotationOption: "Odwrotna wertykalna",
-    playerCountLabel: "Gracze:",
+    UIControlSizeSpan: "Rozmiar elementów sterujących:",
+    colorSchemeLabel: "Schemat kolorów:",
+    colorSchemeOptions: {
+      light: "Jasny",
+      dark: "Ciemny",
+      blue: "Niebieski",
+      green: "Zielony",
+      yellow: "Żółty",
+      pink: "Różowy",
+      red: "Czerwony",
+      orange: "Pomarańczowy",
+      purple: "Fioletowy",
+      brown: "Brązowy",
+    },
+    colorSchemeLabelLoading: "Wybierz swój ulubiony kolor:",
+    colorSchemeInfoLoading: "Ten kolor zostanie użyty do personalizacji",
   },
   de: {
     termsText:
-      "Durch die Fortsetzung stimmen Sie unserer <a href='#' onclick='openPrivacyPolicy()'>Datenschutzrichtlinie</a> und den <a href='#' onclick='openTermsOfService()'>Nutzungsbedingungen</a> zu.",
+      "Durch die Fortsetzung stimmen Sie unserer <a onclick='openPrivacyPolicy()'>Datenschutzrichtlinie</a> und den <a onclick='openTermsOfService()'>Nutzungsbedingungen</a> zu.",
     instructions: "Anleitung",
     h6LoadingScreen:
       "Cubanage 3D ist ein Spiel über das Steuern eines Würfels und das Sammeln von Formen. Habt Spaß mit Freunden, denn dieses Spiel ist auf einem Server zusammen mit anderen Spielern gehostet.<br>Viel Spaß beim Spielen🔥",
@@ -308,11 +368,26 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Umgekehrte Horizontal",
     verticalRotationOption: "Vertikal",
     reverseVerticalRotationOption: "Umgekehrte Vertikal",
-    playerCountLabel: "Spieler:",
+    UIControlSizeSpan: "Größe der UI-Steuerelemente:",
+    colorSchemeLabel: "Farbschema:",
+    colorSchemeOptions: {
+      light: "Hell",
+      dark: "Dunkel",
+      blue: "Blau",
+      green: "Verde",
+      yellow: "Amarillo",
+      pink: "Rosa",
+      red: "Rojo",
+      orange: "Naranja",
+      purple: "Púrpura",
+      brown: "Marrón",
+    },
+    colorSchemeLabelLoading: "Wählen Sie Ihre Lieblingsfarbe:",
+    colorSchemeInfoLoading: "Diese Farbe wird für die Personalisierung verwendet",
   },
   es: {
     termsText:
-      "Al continuar, aceptas nuestra <a href='#' onclick='openPrivacyPolicy()'>Política de privacidad</a> y nuestros <a href='#' onclick='openTermsOfService()'>Términos de servicio</a>.",
+      "Al continuar, aceptas nuestra <a onclick='openPrivacyPolicy()'>Política de privacidad</a> y nuestros <a onclick='openTermsOfService()'>Términos de servicio</a>.",
     instructions: "Instrucciones",
     h6LoadingScreen:
       "Cubanage 3D es un juego sobre controlar un cubo y recolectar formas. Diviértete con amigos, ya que este juego está alojado en un servidor junto con otros jugadores.<br>¡Disfruta del juego!🔥",
@@ -361,31 +436,40 @@ const languageTexts = {
     reverseHorizontalRotationOption: "Horizontal Invertido",
     verticalRotationOption: "Vertical",
     reverseVerticalRotationOption: "Vertical Invertido",
-    playerCountLabel: "Jugadores:",
+    UIControlSizeSpan: "Tamaño de los controles de la interfaz:",
+    colorSchemeLabel: "Esquema de colores:",
+    colorSchemeOptions: {
+      light: "Claro",
+      dark: "Oscuro",
+      blue: "Azul",
+      green: "Grün",
+      yellow: "Gelb",
+      pink: "Rosa",
+      red: "Rot",
+      orange: "Orange",
+      purple: "Lila",
+      brown: "Braun",
+    },
+    colorSchemeLabelLoading: "Selecciona tu color favorito:",
+    colorSchemeInfoLoading: "Este color se utilizará para la personalización",
   }
 };
 
 const changeLanguage = (sourceElement) => {
   const selectedLanguage = sourceElement.value;
   const texts = languageTexts[selectedLanguage];
-  const selectLanguageOption = sourceElement.querySelector(
-    'option[value="no"]'
-  );
-  if (selectLanguageOption) {
-    selectLanguageOption.remove();
-  }
+  const selectLanguageOption = sourceElement.querySelector('option[value="selectLanguage"]');
+  if (selectLanguageOption) selectLanguageOption.remove();
+
   if (sourceElement.id === "language-select-loadScreen") {
     document.getElementById("language-select").value = selectedLanguage;
     document.getElementById("terms-text").innerHTML = texts.termsText;
-    document.getElementById("closeLoadingScreenBtn").innerHTML =
-      texts.continueButtonText;
+    document.getElementById("closeLoadingScreenBtn").innerHTML = texts.continueButtonText;
   }
   document.getElementById("h6LoadingScreen").innerHTML = texts.h6LoadingScreen;
-
   document.getElementById("instructions-btn").textContent = texts.instructions;
   document.getElementById("musicTextSettings").textContent = texts.music;
-  document.getElementById("fog-checkbox").previousElementSibling.textContent =
-    texts.enableFog;
+  document.getElementById("fog-checkbox").previousElementSibling.textContent = texts.enableFog;
   document.getElementById("size-text").textContent = texts.sizeCube;
   document.getElementById("rotation-text").textContent = texts.rotationSpeed;
   document.getElementById("force-text").textContent = texts.forceControl;
@@ -394,58 +478,45 @@ const changeLanguage = (sourceElement) => {
   document.getElementById("h2-sensitivity").innerHTML = texts.sensitivity;
   document.getElementById("h2-graphics").innerHTML = texts.graphics;
   document.getElementById("settings-btn").textContent = texts.settingsBtn;
-  document.getElementById("cameraLookToggleText").textContent =
-    texts.cameraLook;
-  document.getElementById("camera-follow-label").textContent =
-    texts.cameraFollow;
+  document.getElementById("cameraLookToggleText").textContent = texts.cameraLook;
+  document.getElementById("camera-follow-label").textContent = texts.cameraFollow;
   document.getElementById("starsText").textContent = texts.stars;
   document.getElementById("button-spawn-screen").textContent = texts.spawn;
   document.getElementById("h2-spawn-screen").innerHTML = texts.h2SpawnText;
   document.getElementById("animSpawnText").textContent = texts.animSpawnText;
-  document.getElementById("continueButton").textContent =
-    texts.continueButtonText;
+  document.getElementById("continueButton").textContent = texts.continueButtonText;
   document.getElementById("h2Paused").textContent = texts.h1PausedText;
   document.getElementById("pauseButton").textContent = texts.pauseText;
   document.getElementById("h5Instructions").innerHTML = texts.h5Instructions;
   document.getElementById("h1Instructions").innerHTML = texts.instructions;
   document.getElementById("quality-text").textContent = texts.qualityText;
   document.getElementById("h2-background").innerHTML = texts.h2Background;
-  document.getElementById("textColorImages").textContent =
-    texts.textColorImages;
-  document.getElementById("textColorColors").textContent =
-    texts.textColorColors;
-  document.getElementById("textColorOthers").textContent =
-    texts.textColorOthers;
-  document.getElementById("toggleMoveLabel").textContent =
-    texts.settingsMoveLabel;
-  document.getElementById("textVolumeForSlider").textContent =
-    texts.labelVolumeMusic;
-  document.getElementById("labelMusicForToggle").textContent =
-    texts.music + ":";
-  document.getElementById("musicSelectorLabel").textContent =
-    texts.labelSelectorMusic;
-  document.getElementById(
-    "language-select"
-  ).previousElementSibling.textContent = texts.selectLanguage;
+  document.getElementById("textColorImages").textContent = texts.textColorImages;
+  document.getElementById("textColorColors").textContent = texts.textColorColors;
+  document.getElementById("textColorOthers").textContent = texts.textColorOthers;
+  document.getElementById("toggleMoveLabel").textContent = texts.settingsMoveLabel;
+  document.getElementById("textVolumeForSlider").textContent = texts.labelVolumeMusic;
+  document.getElementById("labelMusicForToggle").textContent = texts.music + ":";
+  document.getElementById("musicSelectorLabel").textContent = texts.labelSelectorMusic;
+  document.getElementById("language-select").previousElementSibling.textContent = texts.selectLanguage;
   document.getElementById("h2-map").textContent = texts.h2Map;
-  document.getElementById("rotateMapToggle").textContent =
-    texts.rotateMapToggle;
+  document.getElementById("rotateMapToggle").textContent = texts.rotateMapToggle;
   document.getElementById("mapSize-text").textContent = texts.mapSizeText;
   document.getElementById("h3-keyBindings").textContent = texts.h2KeyBindings;
-  document.getElementById("open-settingsBindings-btn").textContent =
-    texts.h2KeyBindings;
+  document.getElementById("open-settingsBindings-btn").textContent = texts.h2KeyBindings;
   document.getElementById("h2-mobile&pc").textContent = texts.h2mobilePc;
-  document.getElementById("keyboardOrButtonsLabel").textContent =
-    texts.keyboardOrButtonsLabel;
-  document.getElementById("rotationSelectLabel").textContent =
-    texts.rotationSelectLabel;
-  document.getElementById("horizontalRotationOption").textContent =
-    texts.horizontalRotationOption;
-  document.getElementById("reverseHorizontalRotationOption").textContent =
-    texts.reverseHorizontalRotationOption;
-  document.getElementById("verticalRotationOption").textContent =
-    texts.verticalRotationOption;
-  document.getElementById("reverseVerticalRotationOption").textContent =
-    texts.reverseVerticalRotationOption;
+  document.getElementById("keyboardOrButtonsLabel").textContent = texts.keyboardOrButtonsLabel;
+  document.getElementById("rotationSelectLabel").textContent = texts.rotationSelectLabel;
+  document.getElementById("horizontalRotationOption").textContent = texts.horizontalRotationOption;
+  document.getElementById("reverseHorizontalRotationOption").textContent = texts.reverseHorizontalRotationOption;
+  document.getElementById("verticalRotationOption").textContent = texts.verticalRotationOption;
+  document.getElementById("reverseVerticalRotationOption").textContent = texts.reverseVerticalRotationOption;
+  document.getElementById("UIControlSizeSpan").textContent = texts.UIControlSizeSpan;
+  document.getElementById("colorSchemeLabel").textContent = texts.colorSchemeLabel;
+  Array.from(document.getElementById("colorSchemeSelect").options).forEach(option => {
+    option.textContent = texts.colorSchemeOptions[option.value];
+  });
+  document.getElementById("colorSchemeLabelLoading").textContent = texts.colorSchemeLabelLoading;
+  document.getElementById("colorSchemeInfoLoadingLabel").textContent = texts.colorSchemeInfoLoading+".";
   document.getElementById("player-count-label").textContent = texts.playerCountLabel;
 };
