@@ -1,13 +1,10 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory, abort
 from flask_socketio import SocketIO, emit, join_room, leave_room
-import logging
 import os
-
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
-socketio = SocketIO(app, logger=False, engineio_logger=False)
+socketio = SocketIO(app)
 
 players = {}
 
@@ -28,7 +25,7 @@ def handle_connect():
     player_id = request.sid
     user_agent = request.headers.get('User-Agent', '')
     if any(agent in user_agent.lower() for agent in {'bot', 'tool'}):
-        logging.info(f"Виявлено моніторингове підключення від " + user_agent)
+        print(f"Виявлено моніторингове підключення від " + user_agent)
         emit('monitoring_detected', {'message': 'You have been identified as a monitoring service and will not be connected to the game server.'}, to=player_id)
         return
 
