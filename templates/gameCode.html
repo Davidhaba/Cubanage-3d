@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -25,7 +25,7 @@
   <div id="monitoringMessage">You have been identified as monitoring and will not be connected to the server.</div>
   <div id="loading-screen">
     <select id="language-select-loadScreen" onchange="changeLanguage(this)">
-      <option value="no" disabled="true" selected="true">Select language</option>
+      <option value="selectLanguage" disabled selected>Select language</option>
     </select>
 
     <h6 id="h6LoadingScreen">Cubanage 3D is a game about controlling a cube and collecting shapes. Have fun with friends and other players, as this game is hosted on a server.<br>Have a good game🔥</h6>
@@ -35,6 +35,24 @@
       <h1 style="margin: 0;">ADING...</h1>
     </div>
     <button class="control-button" onclick="closeLoadingScreen()" id="closeLoadingScreenBtn">Continue</button>
+
+    <div id="colorSchemeMenuLoading">
+      <p id="colorSchemeLabelLoading">Select your favorite color:</p>
+      <div>
+        <div class="color-option" style="background-color: white;" onclick="changeColorSchemeLoading('light', this)"></div>
+        <div class="color-option" style="background-color: black; color: white;" onclick="changeColorSchemeLoading('dark', this)"></div>
+        <div class="color-option" style="background-color: red;" onclick="changeColorSchemeLoading('red', this)"></div>
+        <div class="color-option" style="background-color: brown;" onclick="changeColorSchemeLoading('brown', this)"></div>
+        <div class="color-option" style="background-color: orange;" onclick="changeColorSchemeLoading('orange', this)"></div>
+        <div class="color-option" style="background-color: yellow; color: black;" onclick="changeColorSchemeLoading('yellow', this)"></div>
+        <div class="color-option" style="background-color: green;" onclick="changeColorSchemeLoading('green', this)"></div>
+        <div class="color-option selected" style="background-color: blue;" onclick="changeColorSchemeLoading('blue', this)"></div>
+        <div class="color-option" style="background-color: purple;" onclick="changeColorSchemeLoading('purple', this)"></div>
+        <div class="color-option" style="background-color: #ff69b4; color: black;" onclick="changeColorSchemeLoading('pink', this)"></div>
+      </div>
+      <p id="colorSchemeInfoLoadingP">&lt;p.s&gt; <label id="colorSchemeInfoLoadingLabel">This color will be used for personalization.</label></p>
+    </div>
+
     <p id="terms-text">
       By continuing, you agree to our
       <a onclick="openPrivacyPolicy()">Privacy Policy</a> and
@@ -99,34 +117,34 @@
   <div id="miniMapContainer"></div>
   <div id="controls-camera">
     <div>
-    <div style="display: flex; flex-direction: row;">
-      <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
-      <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
-    </div>
-    <div id="zoom-controls">
-      <label for="zoom-slider">Zoom / Z:</label>
-      <input type="range" id="zoom-slider" min="1" max="40" step="0.2" value="10" oninput="updateZoom()">
-    </div>
-    <div style="display: flex; flex-direction: column;">
-      <div id="camera-follow">
-        <label id="camera-follow-label" for="camera-toggle">Follow the cube:</label>
-        <input type="checkbox" id="camera-toggle" onchange="toggleCamera()">
+      <div style="display: flex; flex-direction: row;">
+        <button class="control-button" id="pauseButton" onclick="pauseUnpauseFunc()">Pause</button>
+        <button id="button-spawn-screen" class="control-button" onclick="spawnScreen()">Spawn</button>
       </div>
-      <div id="toggle-look-camera">
-        <label for="checkboxCameraLook" id="cameraLookToggleText">Look at the cube:</label>
-        <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
+      <div id="zoom-controls">
+        <label for="zoom-slider">Zoom / Z:</label>
+        <input type="range" id="zoom-slider" min="1" max="40" step="0.2" value="10" oninput="updateZoom()">
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <div id="camera-follow">
+          <label id="camera-follow-label" for="camera-toggle">Follow the cube:</label>
+          <input type="checkbox" id="camera-toggle" onchange="toggleCamera()">
+        </div>
+        <div id="toggle-look-camera">
+          <label for="checkboxCameraLook" id="cameraLookToggleText">Look at the cube:</label>
+          <input type="checkbox" id="checkboxCameraLook" onchange="toggleCameraLookAt()" checked>
+        </div>
       </div>
     </div>
-  </div>
-  <div style="margin-top: 10px;">
-    <div id="score-counter">
-      <span id="starsText">Stars:</span>
-      <span id="score">0/10</span>
+    <div style="margin-top: 10px;">
+      <div id="score-counter">
+        <span id="starsText">Stars:</span>
+        <span id="score">0/10</span>
+      </div>
+      <div>
+        <p style="margin: 0; padding: 0;"><span id="player-count-label">Players:</span> <span id="player-count">0</span></p>
+      </div>
     </div>
-    <div>
-      <p style="margin: 0; padding: 0;"><span id="player-count-label">Players:</span> <span id="player-count">0</span></p>
-    </div>
-  </div>
   </div>
   <div id="message-container"></div>
 
@@ -140,18 +158,10 @@
     <button class="control-button" id="up-btn">
       <img src="https://cdn-icons-png.flaticon.com/512/724/724811.png" alt="Up">
     </button>
-    <button class="control-button" id="left-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Left">
-    </button>
-    <button class="control-button" id="right-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Right">
-    </button>
-    <button class="control-button" id="forward-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Forward">
-    </button>
-    <button class="control-button" id="back-btn">
-      <img src="https://cdn-icons-png.flaticon.com/512/3042/3042406.png" alt="Back">
-    </button>
+    <button class="control-button" id="left-btn">&larr;</button>
+    <button class="control-button" id="right-btn">&rarr;</button>
+    <button class="control-button" id="forward-btn">&uarr;</button>
+    <button class="control-button" id="back-btn">&darr;</button>
   </div>
 
   <div id="spawn-screen">
@@ -218,7 +228,7 @@
 
       <div id="UIsize-controls">
         <label for="UIsize-slider">
-          <span>UI controls Size:</span>
+          <span id="UIControlSizeSpan">UI controls Size:</span>
           <span id="UISize-value">1.0</span>
         </label>
         <input type="range" id="UIsize-slider" min="0.5" max="2" step="0.1" value="1" oninput="updateUISize()">
@@ -229,6 +239,22 @@
         <input type="checkbox" id="fog-checkbox" onchange="toggleFog()">
       </div>
 
+      <div id="colorSchemeMenu">
+        <label for="colorSchemeSelect" id="colorSchemeLabel">Color Scheme:</label>
+        <select id="colorSchemeSelect" onchange="changeColorScheme(this.value)">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="red">Red</option>
+          <option value="brown">Brown</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue" selected>Blue</option>
+          <option value="purple">Purple</option>
+          <option value="pink">Pink</option>
+        </select>
+      </div>
+      
       <h2 id="h2-sensitivity"><br>Sensitivity</h2>
       <div id="sensitivityRotation">
         <label for="rotation-speed-slider" id="rotationLabel">
@@ -451,7 +477,7 @@
     let particleGravity = 0.004;
     let skyTexture, skyMaterial, sky;
     const skyGeometry = new THREE.SphereBufferGeometry(800, 100, 100);
-
+    const elementsToStyle = ['body', '#miniMapContainer', '.control-button', '#controls-camera', '#instructions', 'select', '#modal-content', '.close', '#spawn-screen-modal', '.background-controls', '#loading-screen', '#h6LoadingScreen', '.modalTextsRules-content', 'input[type="range"]', 'input[type="checkbox"]'];
     const keyBindings = {
       upCamera: 'w',
       downCamera: 's',
@@ -601,6 +627,25 @@
   </script>
 
   <script>
+    function changeColorSchemeLoading(scheme, element) {
+      if (element.classList.contains("selected")) return;
+      document.querySelectorAll('.color-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      element.classList.add('selected');
+      changeColorScheme(scheme);
+      document.getElementById("colorSchemeSelect").value = scheme;
+    }
+    function changeColorScheme(scheme) {
+      elementsToStyle.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+          element.classList.remove('light-scheme', 'dark-scheme', 'blue-scheme', 'green-scheme', 'yellow-scheme', 'pink-scheme', 'red-scheme', 'orange-scheme', 'purple-scheme', 'brown-scheme');
+          element.classList.add(`${scheme}-scheme`);
+        });
+      });
+    }
+
     function updateRotationType() {
       const rotationTypeHorizontal = document.getElementById('rotationSelect');
       const rotationType = rotationTypeHorizontal.value;
@@ -1061,8 +1106,8 @@ document.addEventListener('touchend', (event) => {
        setTimeout(function() {
           h1LoadingScreen.style.display = 'none';
           loadingLoadScreen = false;
+          document.getElementById('closeLoadingScreenBtn').style.display = 'block';
         }, 500);
-         document.getElementById('closeLoadingScreenBtn').style.display = 'block';
       }, 1000);
     };
 
