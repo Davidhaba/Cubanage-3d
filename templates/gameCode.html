@@ -845,6 +845,7 @@
       const newSize = parseFloat(sizeSlider.value);
       cube.scale.set(newSize, newSize, newSize);
       sizeLabel.textContent = `${newSize.toFixed(1)}`;
+      socket.emit('resize_cube', { size: newSize });
     }
     function updateUISize() {
   const newSize = document.getElementById('UIsize-slider').value;
