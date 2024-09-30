@@ -114,6 +114,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Select your favorite color:",
     colorSchemeInfoLoading: "This color will be used for personalization",
+    playerCountLabel: "Players:",
   },
   ua: {
     termsText:
@@ -181,6 +182,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Виберіть свій улюблений колір:",
     colorSchemeInfoLoading: "Цей колір буде використано для персоналізації",
+    playerCountLabel: "Гравці:",
   },
   ru: {
     termsText:
@@ -248,6 +250,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Выберите ваш любимый цвет:",
     colorSchemeInfoLoading: "Этот цвет будет использован для персонализации",
+    playerCountLabel: "Игроки:",
   },
   pl: {
     termsText:
@@ -315,6 +318,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Wybierz swój ulubiony kolor:",
     colorSchemeInfoLoading: "Ten kolor zostanie użyty do personalizacji",
+    playerCountLabel: "Gracze:",
   },
   de: {
     termsText:
@@ -384,6 +388,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Wählen Sie Ihre Lieblingsfarbe:",
     colorSchemeInfoLoading: "Diese Farbe wird für die Personalisierung verwendet",
+    playerCountLabel: "Spieler:",
   },
   es: {
     termsText:
@@ -452,6 +457,7 @@ const languageTexts = {
     },
     colorSchemeLabelLoading: "Selecciona tu color favorito:",
     colorSchemeInfoLoading: "Este color se utilizará para la personalización",
+    playerCountLabel: "Jugadores:",
   }
 };
 
