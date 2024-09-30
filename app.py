@@ -9,6 +9,7 @@ logging.getLogger('werkzeug').setLevel(logging.ERROR)
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
+app.logger.setLevel(logging.ERROR)
 
 players = {}
 
