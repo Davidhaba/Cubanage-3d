@@ -4,12 +4,10 @@ import logging
 import os
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
-logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
-socketio = SocketIO(app)
-app.logger.setLevel(logging.ERROR)
+socketio = SocketIO(app, logger=False, engineio_logger=False)
 
 players = {}
 
